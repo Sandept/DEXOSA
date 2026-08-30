@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -15,11 +15,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./Web - Demo 1/Iron_man"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,23 +29,17 @@ jobs:
           cache-dependency-path: "./Web - Demo 1/Iron_man/package-lock.json"
 
       - name: Install dependencies
+        working-directory: "./Web - Demo 1/Iron_man"
         run: npm ci
 
       - name: Build with Next.js
+        working-directory: "./Web - Demo 1/Iron_man"
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: "./Web - Demo 1/Iron_man/out"
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: "./Web - Demo 1/Iron_man/out"
+          publish_branch: gh-pages
+          force_orphan: true
