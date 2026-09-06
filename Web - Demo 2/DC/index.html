@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batman & Superman Store</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="variables.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-left">
+      <span class="hamburger">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="square">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </span>
+      <span class="menu-label">MENU</span>
+    </div>
+    <div class="nav-center">
+      <span class="logo">Disney Cinemas</span>
+    </div>
+    <div class="nav-right">
+      <span class="icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="square">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
+    </div>
+  </nav>
+
+  <!-- Hero Stage: First Animation (B vs S) -->
+  <section class="canvas-section" id="b-vs-s-section">
+    <div class="sticky-container">
+      <canvas id="b-vs-s-canvas"></canvas>
+      <div class="blend-overlay bottom white-blend"></div>
+      <div class="hero-overlay" id="batman-text">
+        <h1 class="headline reveal-up delay-2"><span class="outline-text">BATMAN</span></h1>
+      </div>
+      <div class="hero-overlay" id="vs-text" style="opacity: 0;">
+        <h1 class="headline headline-sm"><span class="outline-text">Verse</span></h1>
+      </div>
+      <div class="hero-overlay right-aligned" id="superman-text" style="opacity: 0;">
+        <h1 class="headline"><span class="outline-text">SUPERMAN</span></h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial Section -->
+  <section class="editorial-section">
+    <div class="container">
+
+      <!-- Section Heading Block -->
+      <div class="section-heading reveal-up">
+        <h2 class="section-title">THE JUSTICE ARCHIVES</h2>
+        <a href="#" class="ghost-link">EXPLORE LEGENDS <span class="arrow">→</span></a>
+      </div>
+
+      <!-- Three-Column Story Grid -->
+      <div class="story-grid">
+        <div class="story-card reveal-up delay-1">
+          <div class="date-label">GUARDIAN OF NIGHT</div>
+          <h3 class="card-title">THE DARK KNIGHT</h3>
+          <div class="image-wrapper">
+            <img src="Batman.jpg" alt="Batman" class="card-image">
+          </div>
+        </div>
+        <div class="story-card reveal-up delay-2">
+          <div class="date-label">AGENT OF CHAOS</div>
+          <h3 class="card-title">THE JOKER</h3>
+          <div class="image-wrapper">
+            <img src="joker.jpg" alt="Joker" class="card-image">
+          </div>
+        </div>
+        <div class="story-card reveal-up delay-3">
+          <div class="date-label">LAST SON OF KRYPTON</div>
+          <h3 class="card-title">THE MAN OF STEEL</h3>
+          <div class="image-wrapper">
+            <img src="Superman.jpg" alt="Superman" class="card-image" style="object-position: center 25%;">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Hero Stage: Second Animation (Batman Car) -->
+  <section class="canvas-section" id="batman-car-section">
+    <div class="sticky-container">
+      <div class="blend-overlay top"></div>
+      <canvas id="batman-car-canvas"></canvas>
+      <div class="blend-overlay bottom"></div>
+      <div class="hero-overlay">
+        <h2 class="eyebrow reveal-up delay-1">ENGINEERED FOR THE KNIGHT</h2>
+        <h1 class="headline headline-sm reveal-up delay-2"><span class="outline-text">THE BATMOBILE</span> <br>
+          COLLECTION</h1>
+        <button class="giallo-btn reveal-up delay-3">EXPLORE <span class="arrow">→</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <h2 class="footer-title">Disney Comics</h2>
+      <p class="footer-text">© 2026 WAYNE ENTERPRISES & LEXCORP. ALL RIGHTS RESERVED.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,342 @@
+/* Import CSS Custom Properties */
+@import url('variables.css');
+
+/* Global Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-open-sans);
+  background-color: var(--color-carbony-black);
+  color: var(--color-pearl-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Film Grain overlay for cinematic texture */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Typography Overrides based on Bebas Neue / LamboType spec */
+h1, h2, h3, h4, h5, h6, .lambo-type {
+  font-family: 'Bebas Neue', sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.023em; /* 0.0230em specified in DESIGN.md */
+}
+
+/* Top Navigation Bar */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background-color: rgba(32, 32, 32, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-24);
+  z-index: 1000;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.023em;
+}
+
+.nav-center .logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+}
+
+/* Canvas Sections (Sticky for scrolling) */
+.canvas-section {
+  position: relative;
+  /* Total height of the section depends on how long we want to scroll to scrub frames.
+     Roughly 200 frames -> maybe 300vh to give enough scroll time */
+  height: 300vh; 
+  background-color: var(--color-pure-black);
+}
+
+.sticky-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This works if canvas is wrapped or we handle it in JS */
+  display: block;
+}
+
+/* Overlays & Blend Effects */
+.blend-overlay {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 10vh; /* Reduced from 25vh for a more subtle blend */
+  z-index: 5;
+  pointer-events: none;
+}
+.blend-overlay.top {
+  top: 0;
+  background: linear-gradient(to bottom, var(--color-pearl-white) 0%, transparent 100%);
+}
+.blend-overlay.bottom {
+  bottom: 0;
+  background: linear-gradient(to top, var(--color-pure-black) 0%, transparent 100%);
+}
+.blend-overlay.bottom.white-blend {
+  background: linear-gradient(to top, var(--color-pearl-white) 0%, transparent 100%);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: var(--spacing-40);
+  transform: translateY(-50%);
+  z-index: 10;
+  max-width: 50%;
+}
+
+.hero-overlay.right-aligned {
+  left: auto;
+  right: var(--spacing-40);
+  text-align: left; /* Keep left alignment for text block, but block is on right */
+}
+
+.eyebrow {
+  font-size: 16px; /* 12-16px */
+  margin-bottom: var(--spacing-16);
+}
+
+.headline {
+  font-size: 140px; /* Scaled up for drama */
+  line-height: 0.85;
+  margin-bottom: var(--spacing-40);
+  text-shadow: 0 10px 30px rgba(0,0,0,0.9); 
+}
+
+.headline-sm {
+  font-size: 80px;
+}
+
+/* Outline text effect */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--color-pearl-white);
+}
+
+/* Buttons */
+.giallo-btn {
+  background-color: var(--color-giallo-vivo);
+  color: var(--color-pure-black);
+  border: none;
+  border-radius: 0;
+  padding: 16px 24px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.023em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 15px rgba(255, 192, 0, 0); /* Invisible initial shadow */
+}
+
+.giallo-btn .arrow {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.giallo-btn:hover {
+  background-color: var(--color-pearl-white); /* Switch color for contrast pop */
+  box-shadow: 0 10px 25px rgba(255, 192, 0, 0.3); /* Glow effect */
+}
+
+.giallo-btn:hover .arrow {
+  transform: translateX(6px);
+}
+
+.ghost-link {
+  color: var(--color-pure-black);
+  text-decoration: none;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.023em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  transition: opacity 0.3s ease;
+}
+
+.ghost-link .arrow {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ghost-link:hover {
+  opacity: 0.7;
+}
+
+.ghost-link:hover .arrow {
+  transform: translateX(6px);
+}
+
+/* Editorial Section */
+.editorial-section {
+  background-color: var(--color-pearl-white);
+  color: var(--color-pure-black);
+  padding: var(--spacing-80) var(--spacing-24);
+}
+
+.container {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-64);
+}
+
+.section-title {
+  font-size: 54px; /* 40-54px */
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-24);
+}
+
+.story-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.story-card:hover .card-title {
+  color: var(--color-giallo-ombra);
+}
+
+.date-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  color: var(--color-steel-mid);
+  margin-bottom: var(--spacing-8);
+  letter-spacing: 0.023em;
+}
+
+.card-title {
+  font-size: 27px; /* 16-27px */
+  margin-bottom: var(--spacing-16);
+  letter-spacing: 0.023em;
+  transition: color 0.3s ease;
+}
+
+.image-wrapper {
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.story-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+/* Scroll Reveal Animations */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal-up.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+/* Footer */
+.footer {
+  background-color: var(--color-pure-black);
+  padding: var(--spacing-80) var(--spacing-24);
+  text-align: center;
+}
+
+.footer-title {
+  font-size: 40px;
+  margin-bottom: var(--spacing-16);
+}
+
+.footer-text {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--color-steel-mid);
+  font-size: 12px;
+  letter-spacing: 0.023em;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+  .headline {
+    font-size: 54px;
+  }
+  .hero-overlay {
+    max-width: 80%;
+    left: var(--spacing-24);
+  }
+  .hero-overlay.right-aligned {
+    right: var(--spacing-24);
+  }
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
+  .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-16);
+  }
+}
