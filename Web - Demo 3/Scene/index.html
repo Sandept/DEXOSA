@@ -13,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 
 <body>
@@ -56,28 +56,13 @@
 
             <nav class="header-center desktop-nav" aria-label="Main Navigation">
                 <ul class="nav-pill">
-                    <li><a href="#" class="nav-item active">Outfits</a></li>
-                    <li><a href="#" class="nav-item">About</a></li>
+                    <li><a href="#" class="nav-item active" id="nav-outfits">Outfits</a></li>
+                    <li><a href="#" class="nav-item" id="nav-about">About</a></li>
                 </ul>
             </nav>
 
             <div class="header-right">
-                <button class="icon-btn" aria-label="Shopping Cart" title="Cart">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
-                </button>
-                <button class="icon-btn" aria-label="Wishlist" title="Wishlist">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                        </path>
-                    </svg>
-                </button>
+                <button type="button" class="mobile-nav-btn" id="mobile-about-btn">About</button>
             </div>
         </header>
 
@@ -86,7 +71,7 @@
 
             <!-- Left Hero Content -->
             <section class="hero-left">
-                <div class="slider-arrows">
+                <div class="slider-arrows" id="slider-arrows">
                     <button id="prev-btn" class="arrow-btn" aria-label="Previous Slide" title="Previous">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
                             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -105,83 +90,80 @@
                 <h1 class="hero-title text-fade" id="product-title">Full Outfit</h1>
 
                 <p class="hero-description text-fade" id="product-description">
-                    The head-to-toe coordinated ensemble. Effortlessly tailored silhouette combining premium heavyweight
-                    tee, signature relaxed shorts, luxury timepiece, and matching essentials.
+                    Inspired by the cinematic world of the movie "SCENE" — a signature head-to-toe ensemble designed with effortless proportion, capturing the bold charisma, dark tailored elegance, and distinctive on-screen character aesthetic.
                 </p>
 
-                <!-- Desktop CTA -->
+                <!-- Desktop CTA with Side Pop-up Size Selector -->
                 <div class="hero-cta desktop-cta">
-                    <a href="#" class="btn-get-look">
-                        <span>Get the look</span>
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
-                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <button type="button" class="btn-get-look" id="desktop-cta-btn">
+                        <span id="desktop-cta-text">Get the look</span>
+                        <svg class="cta-arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                    </a>
+                    </button>
+                    <!-- Side Size Popup for Desktop -->
+                    <div class="size-popup" id="desktop-size-popup" aria-hidden="true">
+                        <span class="size-popup-label">Size:</span>
+                        <div class="size-popup-options" id="desktop-size-options" role="radiogroup"
+                            aria-label="Available Sizes"></div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Right Hero Content (Desktop Pricing & Sizes) -->
-            <section class="hero-right">
+            <!-- Right Hero Content (Pricing removed & Size Section hidden as requested) -->
+            <section class="hero-right" style="display: none;" aria-hidden="true">
                 <div class="pricing-box text-fade" id="pricing-container">
-                    <div class="price-sale" id="product-price-sale">$289</div>
-                    <div class="price-regular" id="product-price-regular">$350</div>
+                    <div class="price-sale" id="product-price-sale"></div>
+                    <div class="price-regular" id="product-price-regular"></div>
                 </div>
 
                 <div class="size-selector-box">
                     <div class="size-label" id="size-label">Select size:</div>
                     <div class="size-options" id="size-options" role="radiogroup" aria-label="Available Sizes">
-                        <!-- Populated dynamically via JS -->
                     </div>
                 </div>
             </section>
 
         </main>
 
-        <!-- Mobile Floating CTA Button (Centered below product) -->
+        <!-- Mobile Floating CTA Button (Centered below product) with Popup Size Selector -->
         <div class="mobile-cta-container">
-            <a href="#" class="btn-get-look mobile-btn">
-                <span>Get the look</span>
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
+            <!-- Size Popup for Mobile (Pops up above button) -->
+            <div class="size-popup mobile-size-popup" id="mobile-size-popup" aria-hidden="true">
+                <span class="size-popup-label">Size:</span>
+                <div class="size-popup-options" id="mobile-size-options" role="radiogroup" aria-label="Available Sizes">
+                </div>
+            </div>
+            <button type="button" class="btn-get-look mobile-btn" id="mobile-cta-btn">
+                <span id="mobile-cta-text">Get the look</span>
+                <svg class="cta-arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
-            </a>
+            </button>
         </div>
 
         <!-- Bottom Footer Layer -->
         <footer class="site-footer">
             <div class="footer-left">
                 <div class="social-icons">
-                    <a href="#" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">
+                    <a href="https://www.instagram.com/san_maverick08/" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                             <path
                                 d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                     </a>
-                    <a href="#" class="social-link" aria-label="Facebook" target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                            <path
-                                d="M9 8h-3v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.667 5H18V0h-3.808C10.597 0 9 1.583 9 4.615V8z" />
-                        </svg>
+                    <a href="#" class="social-link dexosa-logo-link" id="dexosa-spin-btn" aria-label="DEXOSA Emblem" role="button" title="Tap to spin DEXOSA emblem">
+                        <img src="images/Logo.png" alt="DEXOSA" class="social-icon-img">
                     </a>
-                    <a href="#" class="social-link" aria-label="Dribbble" target="_blank" rel="noopener">
+                    <a href="https://github.com/Sandept" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                            <path
-                                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm10.027 10.518c-.283-.049-2.915-.494-5.845-.138.835-2.029 1.574-4.041 2.08-5.617 2.197 1.464 3.593 3.659 3.765 5.755zm-5.748-7.399c-.502 1.564-1.229 3.547-2.051 5.545-3.085-1.129-6.309-1.503-7.559-1.554 1.954-2.457 4.909-4.042 8.243-4.042.476 0 .935.031 1.367.091zm-11.45 4.887c1.393.048 4.382.41 7.279 1.488-.415 1.157-.859 2.348-1.325 3.54-4.48-1.385-8.544.757-8.877.942.235-2.483 1.36-4.634 2.923-5.97zm-2.829 8.016c.414-.236 3.993-2.148 8.41-.88-.419 1.161-.836 2.302-1.246 3.398-3.791.951-6.729 3.327-7.069 3.619-1.327-1.748-2.095-3.864-2.095-6.137 0-.001 0-.001 0 0zm4.269 8.232c.381-.334 3.013-2.489 6.643-3.411 1.465 4.093 2.083 7.625 2.247 8.643-3.693 1.096-7.392-.919-8.89-5.232zm10.742 3.861c-.179-1.095-.783-4.436-2.179-8.373 2.584-.339 5.093.061 5.348.106-.411 3.255-2.036 6.069-4.529 8.267z" />
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Behance" target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                            <path
-                                d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-4.726 3-3.659 0-6-2.709-6-6 0-3.527 2.455-6 6-6 3.673 0 5.753 2.569 5.753 6.07 0 .421-.037.93-.053 1.065h-8.894c.063 1.947 1.579 3.065 3.316 3.065 1.517 0 2.497-.665 2.871-1.2h1.733zm-6.92-4.135h6.053c-.097-1.637-1.24-2.6-2.883-2.6-1.772 0-2.898 1.082-3.17 2.6zm-11.806-3.865h-5v8h5c1.947 0 3-.984 3-2.518 0-1.127-.674-1.89-1.691-2.146.732-.338 1.291-1.077 1.291-1.921 0-1.415-1.053-2.415-2.6-2.415zm-2.2 3.3h-1.8v-1.9h1.8c.844 0 1.2.356 1.2.95 0 .593-.356.95-1.2.95zm.2 3.4h-2v-2.1h2c.947 0 1.4.385 1.4 1.05 0 .666-.453 1.05-1.4 1.05z" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                         </svg>
                     </a>
                 </div>
-            </div>
-
-            <div class="footer-center">
-                <div class="brand-slogan">Scene<br>Crafted in detail</div>
             </div>
 
             <div class="footer-right"></div>
@@ -189,7 +171,40 @@
 
     </div>
 
-    <script src="script.js?v=5"></script>
+    <!-- About DEXOSA Modal Pop-up with Blurred Background -->
+    <div class="about-modal-overlay" id="about-modal" aria-hidden="true">
+        <div class="about-modal-backdrop" id="about-modal-backdrop"></div>
+        <div class="about-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="about-title">
+            <button type="button" class="about-close-btn" id="about-close-btn" aria-label="Close About">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="about-modal-content">
+                <div class="about-brand-badge">
+                    <img src="images/Logo.png" alt="DEXOSA Emblem" class="about-brand-icon">
+                    <span class="about-badge-text">AI TECH STARTUP</span>
+                </div>
+                <h2 class="about-title" id="about-title">About DEXOSA</h2>
+                <div class="about-text-content">
+                    <p>
+                        <strong>DEXOSA</strong> is an emerging, forward-thinking <strong>AI technology startup</strong> revolutionizing digital creative intelligence, generative vision systems, and modern cinematic aesthetic design.
+                    </p>
+                    <p>
+                        Born at the intersection of cinema, cutting-edge artificial intelligence, and contemporary craft, DEXOSA builds proprietary generative frameworks and intelligent design engines that bridge digital intelligence with real-world luxury, empowering creators with next-generation interactive experiences.
+                    </p>
+                </div>
+                <div class="about-highlights">
+                    <span class="about-pill">Generative AI</span>
+                    <span class="about-pill">Creative Tech</span>
+                    <span class="about-pill">Cinema &amp; Design</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=7"></script>
 </body>
 
 </html>

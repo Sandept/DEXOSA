@@ -11,11 +11,13 @@
     inherits: true;
     initial-value: #FCCC6A;
 }
+
 @property --bg-mid {
     syntax: '<color>';
     inherits: true;
     initial-value: #D4953A;
 }
+
 @property --bg-end {
     syntax: '<color>';
     inherits: true;
@@ -25,7 +27,9 @@
 /* --------------------------------------------------------------------------
    CSS Reset & Base Tokens
    -------------------------------------------------------------------------- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -36,22 +40,23 @@
 :root {
     --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    
+
     --color-white: #ffffff;
     --color-black: #000000;
     --color-overlay-dark: rgba(0, 0, 0, 0.28);
     --color-overlay-light: rgba(255, 255, 255, 0.18);
     --color-overlay-hover: rgba(255, 255, 255, 0.32);
-    
+
     --current-accent: #FFD876;
     --glow-color: rgba(212, 149, 58, 0.45);
-    
+
     --ease-flight: cubic-bezier(0.25, 1, 0.5, 1);
     --ease-bg: cubic-bezier(0.4, 0, 0.2, 1);
     --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     height: 100dvh;
@@ -108,16 +113,16 @@ html, body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: var(--shadow-width, min(420px, 32vw));
-    height: 42px;
+    height: var(--shadow-height, 42px);
+    opacity: var(--shadow-opacity, 1);
     background: radial-gradient(ellipse at 50% 50%,
-        rgba(0, 0, 0, 0.82) 0%,
-        rgba(0, 0, 0, 0.64) 22%,
-        rgba(0, 0, 0, 0.32) 48%,
-        rgba(0, 0, 0, 0.08) 68%,
-        transparent 78%
-    );
+            rgba(0, 0, 0, 0.82) 0%,
+            rgba(0, 0, 0, 0.64) 22%,
+            rgba(0, 0, 0, 0.32) 48%,
+            rgba(0, 0, 0, 0.08) 68%,
+            transparent 78%);
     filter: blur(10px);
-    transition: top 0.75s var(--ease-flight), width 0.75s var(--ease-flight), transform 0.75s var(--ease-flight), opacity 0.5s ease;
+    transition: top 0.75s var(--ease-flight), width 0.75s var(--ease-flight), height 0.75s var(--ease-flight), opacity 0.5s ease, transform 0.75s var(--ease-flight);
 }
 
 /* Bottom-Right Preview Thumbnail Ground Shadow */
@@ -128,11 +133,10 @@ html, body {
     width: 105px;
     height: 15px;
     background: radial-gradient(ellipse at 50% 50%,
-        rgba(0, 0, 0, 0.70) 0%,
-        rgba(0, 0, 0, 0.42) 32%,
-        rgba(0, 0, 0, 0.10) 58%,
-        transparent 72%
-    );
+            rgba(0, 0, 0, 0.70) 0%,
+            rgba(0, 0, 0, 0.42) 32%,
+            rgba(0, 0, 0, 0.10) 58%,
+            transparent 72%);
     filter: blur(5px);
     transition: all 0.5s ease;
 }
@@ -219,6 +223,59 @@ html, body {
     filter: blur(6px);
     transform: translate(-50%, -50%) scale(0.1);
     pointer-events: none;
+}
+
+/* ==========================================================================
+   INDIVIDUAL PRODUCT POSITION & ALIGNMENT CONTROLS (DESKTOP)
+   Easily adjust top, left, scale, and max-height for each product here!
+   ========================================================================== */
+/* 0: Full Outfit */
+#item-0.state-main {
+    top: 50%;
+    left: 48%;
+    transform: translate(-50%, -50%) scale(1.50);
+}
+
+/* 1: T-Shirt */
+#item-1.state-main {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.50);
+}
+
+/* 2: Shots */
+#item-2.state-main {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.50);
+}
+
+/* 3: Watch */
+#item-3.state-main {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.22);
+}
+
+/* 4: Bracelet */
+#item-4.state-main {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.22);
+}
+
+/* 5: Key Chain */
+#item-5.state-main {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
+/* 6: Slide */
+#item-6.state-main {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.01);
 }
 
 /* --------------------------------------------------------------------------
@@ -318,34 +375,32 @@ html, body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
 }
 
-/* Header Action Buttons (Cart, Heart) */
+/* Header Right */
 .header-right {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.icon-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: none;
+.mobile-nav-btn {
+    display: none;
     background: var(--color-overlay-dark);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
     color: var(--color-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 18px;
     cursor: pointer;
-    transition: all 0.3s var(--ease-flight);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.18);
+    transition: all 0.3s ease;
 }
 
-.icon-btn:hover {
+.mobile-nav-btn:hover {
     background: var(--color-white);
     color: var(--color-black);
-    transform: scale(1.08);
 }
 
 /* --------------------------------------------------------------------------
@@ -370,6 +425,14 @@ html, body {
     display: flex;
     gap: 10px;
     margin-bottom: 22px;
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
+}
+
+.slider-arrows.arrows-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-6px);
 }
 
 .arrow-btn {
@@ -441,6 +504,14 @@ html, body {
     transform: translateY(-8px);
 }
 
+.hero-cta.desktop-cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 35;
+}
+
 .btn-get-look {
     display: inline-flex;
     align-items: center;
@@ -452,13 +523,17 @@ html, body {
     font-weight: 600;
     padding: 13px 28px;
     border-radius: 50px;
+    border: none;
+    cursor: pointer;
     text-decoration: none;
     transition: all 0.3s var(--ease-flight);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    white-space: nowrap;
 }
 
-.btn-get-look svg {
-    transition: transform 0.3s ease;
+.cta-arrow-icon {
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    display: inline-block;
 }
 
 .btn-get-look:hover {
@@ -468,8 +543,93 @@ html, body {
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
-.btn-get-look:hover svg {
+.btn-get-look:hover .cta-arrow-icon:not(.icon-dropdown) {
     transform: translateX(3px);
+}
+
+.btn-get-look.popup-active .cta-arrow-icon {
+    transform: rotate(90deg);
+}
+
+/* ==========================================================================
+   SIZE POPUP COMPONENT (Pops up beside button on Desktop, above on Mobile)
+   ========================================================================== */
+.size-popup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.52);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 50px;
+    padding: 6px 14px 6px 16px;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.38);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-12px) scale(0.94);
+    transition: opacity 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+        transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+        visibility 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.size-popup.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
+.size-popup-label {
+    font-family: var(--font-heading);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.size-popup-options {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.size-chip {
+    min-width: 38px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.22s var(--ease-flight);
+}
+
+.size-chip:hover {
+    background: rgba(255, 255, 255, 0.28);
+    color: var(--color-white);
+    transform: scale(1.08);
+}
+
+.size-chip.active {
+    background: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
+    font-weight: 700;
+    transform: scale(1.06);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 /* Right Hero Section (Pricing & Size Selector) */
@@ -604,6 +764,46 @@ html, body {
     transform: translateY(-3px);
 }
 
+.social-icon-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.social-link:hover .social-icon-img {
+    transform: scale(1.12);
+}
+
+/* 3-Second Spin Animation on Tap/Click */
+@keyframes logoSpin3s {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    15% {
+        transform: rotate(180deg) scale(1.2);
+    }
+
+    50% {
+        transform: rotate(540deg) scale(1.25);
+    }
+
+    85% {
+        transform: rotate(900deg) scale(1.15);
+    }
+
+    100% {
+        transform: rotate(1080deg) scale(1);
+    }
+}
+
+.social-icon-img.spinning {
+    animation: logoSpin3s 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
 .footer-center {
     position: absolute;
     left: 50%;
@@ -627,6 +827,152 @@ html, body {
 .footer-right {
     min-width: 130px;
     min-height: 80px;
+}
+
+/* ==========================================================================
+   ABOUT MODAL POP-UP WITH BACKGROUND BLUR OVERLAY
+   ========================================================================== */
+.about-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    pointer-events: none;
+}
+
+.about-modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.about-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.64);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    cursor: pointer;
+}
+
+.about-modal-dialog {
+    position: relative;
+    z-index: 2;
+    background: rgba(18, 20, 26, 0.76);
+    backdrop-filter: blur(34px);
+    -webkit-backdrop-filter: blur(34px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 28px;
+    padding: 44px 40px 38px 40px;
+    max-width: 580px;
+    width: 100%;
+    color: var(--color-white);
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 216, 118, 0.12);
+    transform: scale(0.92) translateY(24px);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.about-modal-overlay.open .about-modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+.about-close-btn {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.about-close-btn:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+    transform: rotate(90deg) scale(1.08);
+}
+
+.about-brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 100px;
+    padding: 5px 14px 5px 8px;
+    margin-bottom: 20px;
+}
+
+.about-brand-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.about-badge-text {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--current-accent);
+}
+
+.about-title {
+    font-family: var(--font-heading);
+    font-size: clamp(26px, 3.2vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 18px;
+    color: var(--color-white);
+}
+
+.about-text-content {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.92);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.about-text-content strong {
+    color: var(--color-white);
+    font-weight: 600;
+}
+
+.about-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.about-pill {
+    font-family: var(--font-heading);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 100px;
+    padding: 6px 14px;
 }
 
 /* ==========================================================================
@@ -655,9 +1001,24 @@ html, body {
         gap: 10px;
     }
 
-    .icon-btn {
-        width: 38px;
-        height: 38px;
+    .mobile-nav-btn {
+        display: inline-block;
+    }
+
+    .about-modal-dialog {
+        padding: 34px 22px 28px 22px;
+        border-radius: 22px;
+        max-height: 88vh;
+        overflow-y: auto;
+    }
+
+    .about-title {
+        font-size: 26px;
+    }
+
+    .about-text-content {
+        font-size: 14px;
+        line-height: 1.6;
     }
 
     /* Hero Top: Centered Category & Title */
@@ -679,7 +1040,8 @@ html, body {
     }
 
     .slider-arrows {
-        display: none; /* Touch swipe & preview tap navigate */
+        display: none;
+        /* Touch swipe & preview tap navigate */
     }
 
     .product-category {
@@ -735,10 +1097,10 @@ html, body {
     }
 
     .hero-floor-shadow {
-        top: 71% !important;
+        top: var(--shadow-mobile-top, 71%) !important;
         left: 50% !important;
-        width: min(300px, 70vw) !important;
-        height: 24px !important;
+        width: var(--shadow-mobile-width, min(300px, 70vw)) !important;
+        height: var(--shadow-mobile-height, 24px) !important;
         filter: blur(8px) !important;
     }
 
@@ -750,7 +1112,7 @@ html, body {
         filter: blur(4px) !important;
     }
 
-    /* Center Hero Item */
+    /* Center Hero Item Base (Mobile) */
     .jacket-img.state-main {
         top: 47% !important;
         left: 50% !important;
@@ -759,7 +1121,53 @@ html, body {
         z-index: 10 !important;
     }
 
-    /* Bottom Right Preview Thumbnail: exactly like user screenshots */
+    /* ==========================================================================
+       INDIVIDUAL PRODUCT POSITION & ALIGNMENT CONTROLS (MOBILE)
+       Easily adjust top, left, scale, and max-height for mobile screens!
+       ========================================================================== */
+    #item-0.state-main {
+        top: 47% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(1.30) !important;
+    }
+
+    #item-1.state-main {
+        top: 47% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(2.00) !important;
+    }
+
+    #item-2.state-main {
+        top: 47% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(2.00) !important;
+    }
+
+    #item-3.state-main {
+        top: 47% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(1.60) !important;
+    }
+
+    #item-4.state-main {
+        top: 47% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(1.50) !important;
+    }
+
+    #item-5.state-main {
+        top: 47% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(1.50) !important;
+    }
+
+    #item-6.state-main {
+        top: 47% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(1.00) !important;
+    }
+
+    /* Bottom Right Preview Thumbnail */
     .jacket-img.state-preview {
         top: 77% !important;
         left: 83% !important;
@@ -775,14 +1183,31 @@ html, body {
         left: 83% !important;
     }
 
-    /* Mobile CTA Button: Floating centered below the product */
+    /* Mobile CTA Button & Size Popup (Pops up above button) */
     .mobile-cta-container {
         display: flex;
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
         width: 100%;
         padding: 0 20px;
         margin-bottom: 22px;
-        z-index: 30;
+        z-index: 35;
+        position: relative;
+    }
+
+    .size-popup.mobile-size-popup {
+        position: absolute;
+        bottom: calc(100% + 12px);
+        left: 50%;
+        transform: translateX(-50%) translateY(10px) scale(0.92);
+        margin-bottom: 0;
+        padding: 6px 14px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    .size-popup.mobile-size-popup.open {
+        transform: translateX(-50%) translateY(0) scale(1);
     }
 
     .mobile-btn {
@@ -810,8 +1235,13 @@ html, body {
     }
 
     .social-link svg {
-        width: 17px;
-        height: 17px;
+        width: 21px;
+        height: 21px;
+    }
+
+    .social-icon-img {
+        width: 30px;
+        height: 30px;
     }
 
     .footer-right {

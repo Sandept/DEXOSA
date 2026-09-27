@@ -14,79 +14,90 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 0,
             name: 'Full Outfit',
-            category: '- FULL OUTFIT',
+            buttonLabel: 'Get the look',
+            category: '✯ FULL OUTFIT ✯',
             headline: 'DSP INBARAJ',
-            description: 'The head-to-toe coordinated aesthetic. Designed with effortless proportion, harmonizing the premium heavyweight tee, relaxed shorts, timepiece, and handcrafted accessories.',
-            priceSale: '$289',
-            priceRegular: '$350',
+            description: 'Inspired by the cinematic world of the movie "SCENE" — a signature head-to-toe ensemble designed with effortless proportion, capturing the bold charisma, dark tailored elegance, and distinctive on-screen character aesthetic.',
             sizes: ['S', 'M', 'L', 'XL'],
             bgStart: '#FCCC6A',
             bgMid: '#D4953A',
             bgEnd: '#8C5A14',
             glow: 'rgba(252, 204, 106, 0.50)',
             accent: '#FFD876',
-            shadowTop: '85%',
-            shadowWidth: '380px'
+            shadowTop: '94%',
+            shadowWidth: '380px',
+            shadowHeight: '42px',
+            shadowOpacity: '0.85',
+            shadowMobileTop: '80%',
+            shadowMobileWidth: '290px'
         },
         {
             id: 1,
             name: 'T-Shirt',
+            buttonLabel: 'T - Shirt',
             category: '01 / HEAVYWEIGHT APPAREL',
             headline: 'T-Shirt',
             description: 'Cut from 280 GSM luxury combed organic cotton with relaxed drop shoulders and contemporary boxy silhouette. Screen printed with high-density archival graphics.',
-            priceSale: '$65',
-            priceRegular: '$85',
             sizes: ['S', 'M', 'L', 'XL'],
             bgStart: '#7CB8F8',
             bgMid: '#3B82F6',
             bgEnd: '#1A55B8',
             glow: 'rgba(124, 184, 248, 0.50)',
             accent: '#93C5FD',
-            shadowTop: '82%',
-            shadowWidth: '440px'
+            shadowTop: '88%',
+            shadowWidth: '440px',
+            shadowHeight: '42px',
+            shadowOpacity: '0.85',
+            shadowMobileTop: '78%',
+            shadowMobileWidth: '300px'
         },
         {
             id: 2,
             name: 'Shots',
+            buttonLabel: 'Shots',
             category: '02 / RELAXED APPAREL',
             headline: 'Shots',
             description: 'Engineered in heavyweight French terry with deep utility pockets and elongated custom dip-dyed drawstrings. Tailored with a relaxed above-the-knee break.',
-            priceSale: '$75',
-            priceRegular: '$95',
             sizes: ['S', 'M', 'L', 'XL'],
             bgStart: '#F4A87A',
             bgMid: '#E07B3A',
             bgEnd: '#A04C18',
             glow: 'rgba(244, 168, 122, 0.50)',
             accent: '#FDBA8C',
-            shadowTop: '81%',
-            shadowWidth: '390px'
+            shadowTop: '88%',
+            shadowWidth: '390px',
+            shadowHeight: '40px',
+            shadowOpacity: '0.85',
+            shadowMobileTop: '77%',
+            shadowMobileWidth: '280px'
         },
         {
             id: 3,
             name: 'Watch',
+            buttonLabel: 'Watch',
             category: '03 / LUXURY TIMEPIECE',
             headline: 'Watch',
             description: 'Brushed surgical steel case with anti-reflective sapphire crystal and Japanese precision chronograph movement. Finished with a textured silicone deployment strap.',
-            priceSale: '$185',
-            priceRegular: '$240',
             sizes: ['40mm', '42mm'],
             bgStart: '#5ED8A8',
             bgMid: '#2EAA80',
             bgEnd: '#1A7A5A',
             glow: 'rgba(94, 216, 168, 0.50)',
             accent: '#86EFAC',
-            shadowTop: '80%',
-            shadowWidth: '280px'
+            shadowTop: '90%',
+            shadowWidth: '300px',
+            shadowHeight: '36px',
+            shadowOpacity: '0.85',
+            shadowMobileTop: '78%',
+            shadowMobileWidth: '240px'
         },
         {
             id: 4,
             name: 'Bracelet',
+            buttonLabel: 'Bracelet',
             category: '04 / SIGNATURE HARDWARE',
             headline: 'Bracelet',
             description: 'Hand-finished matte obsidian and brushed alloy accents strung with military-grade elastomeric cord. Distinctive whether worn solo or stacked.',
-            priceSale: '$45',
-            priceRegular: '$60',
             sizes: ['S/M', 'M/L'],
             bgStart: '#C9A0F0',
             bgMid: '#9966CC',
@@ -94,33 +105,39 @@ document.addEventListener('DOMContentLoaded', () => {
             glow: 'rgba(201, 160, 240, 0.50)',
             accent: '#D4B5F5',
             shadowTop: '80%',
-            shadowWidth: '290px'
+            shadowWidth: '290px',
+            shadowHeight: '36px',
+            shadowOpacity: '0.85',
+            shadowMobileTop: '70%',
+            shadowMobileWidth: '240px'
         },
         {
             id: 5,
             name: 'Key Chain',
+            buttonLabel: 'Key Chain',
             category: '05 / LEATHER DETAILING',
             headline: 'Key Chain',
             description: 'Custom debossed full-grain calfskin leather finished with spring-loaded gunmetal carabiner clasp and laser-engraved hardware detailing.',
-            priceSale: '$35',
-            priceRegular: '$45',
             sizes: ['ONE SIZE'],
             bgStart: '#F4C080',
             bgMid: '#D4883A',
             bgEnd: '#8C5518',
             glow: 'rgba(244, 192, 128, 0.50)',
             accent: '#F5D49A',
-            shadowTop: '83%',
-            shadowWidth: '300px'
+            shadowTop: '85%',
+            shadowWidth: '300px',
+            shadowHeight: '38px',
+            shadowOpacity: '0.85',
+            shadowMobileTop: '76%',
+            shadowMobileWidth: '250px'
         },
         {
             id: 6,
             name: 'Slide',
+            buttonLabel: 'Slide',
             category: '06 / ERGONOMIC FOOTWEAR',
             headline: 'Slide',
             description: 'High-resilience dual-density molded EVA foam footbed with textured arch support and anti-slip grooved outsole for supreme indoor and street ease.',
-            priceSale: '$55',
-            priceRegular: '$75',
             sizes: ['8', '9', '10', '11'],
             bgStart: '#F4A098',
             bgMid: '#E85D4A',
@@ -128,12 +145,17 @@ document.addEventListener('DOMContentLoaded', () => {
             glow: 'rgba(244, 160, 152, 0.50)',
             accent: '#FCA5A5',
             shadowTop: '82%',
-            shadowWidth: '410px'
+            shadowWidth: '410px',
+            shadowHeight: '42px',
+            shadowOpacity: '0.85',
+            shadowMobileTop: '71%',
+            shadowMobileWidth: '300px'
         }
     ];
 
     let currentIndex = 0;
     let isTransitioning = false;
+    let isSizePopupOpen = false;
     const transitionDuration = 650; // ms debounce window
 
     // DOM Elements
@@ -150,43 +172,112 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
+    const sliderArrows = document.getElementById('slider-arrows');
 
     // Dynamic Text Elements
     const categoryEl = document.getElementById('product-category');
     const titleEl = document.getElementById('product-title');
     const descEl = document.getElementById('product-description');
-    const priceSaleEl = document.getElementById('product-price-sale');
-    const priceRegEl = document.getElementById('product-price-regular');
-    const sizeOptionsContainer = document.getElementById('size-options');
     const navItems = document.querySelectorAll('.nav-item');
+
+    // CTA & Size Popup Elements
+    const desktopCtaBtn = document.getElementById('desktop-cta-btn');
+    const desktopCtaText = document.getElementById('desktop-cta-text');
+    const desktopSizePopup = document.getElementById('desktop-size-popup');
+    const desktopSizeOptions = document.getElementById('desktop-size-options');
+
+    const mobileCtaBtn = document.getElementById('mobile-cta-btn');
+    const mobileCtaText = document.getElementById('mobile-cta-text');
+    const mobileSizePopup = document.getElementById('mobile-size-popup');
+    const mobileSizeOptions = document.getElementById('mobile-size-options');
 
     const root = document.documentElement;
 
     // -------------------------------------------------------------------------
-    // Size Options Renderer
+    // Size Popup Renderer & Toggler
     // -------------------------------------------------------------------------
-    function renderSizeOptions(sizes) {
-        if (!sizeOptionsContainer) return;
-        sizeOptionsContainer.innerHTML = '';
-        sizes.forEach((size, idx) => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'size-btn' + (idx === 0 ? ' active' : '');
-            btn.setAttribute('role', 'radio');
-            btn.setAttribute('aria-checked', idx === 0 ? 'true' : 'false');
-            btn.setAttribute('data-size', size);
-            btn.textContent = size;
-            btn.addEventListener('click', () => {
-                sizeOptionsContainer.querySelectorAll('.size-btn').forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-checked', 'false');
+    function renderSizePopupOptions(sizes) {
+        [desktopSizeOptions, mobileSizeOptions].forEach(container => {
+            if (!container) return;
+            container.innerHTML = '';
+            sizes.forEach((size, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'size-chip' + (idx === 0 ? ' active' : '');
+                btn.setAttribute('role', 'radio');
+                btn.setAttribute('aria-checked', idx === 0 ? 'true' : 'false');
+                btn.setAttribute('data-size', size);
+                btn.textContent = size;
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    container.querySelectorAll('.size-chip').forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-checked', 'false');
+                    });
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-checked', 'true');
                 });
-                btn.classList.add('active');
-                btn.setAttribute('aria-checked', 'true');
+                container.appendChild(btn);
             });
-            sizeOptionsContainer.appendChild(btn);
         });
     }
+
+    function closeSizePopups() {
+        isSizePopupOpen = false;
+        if (desktopSizePopup) {
+            desktopSizePopup.classList.remove('open');
+            desktopSizePopup.setAttribute('aria-hidden', 'true');
+        }
+        if (mobileSizePopup) {
+            mobileSizePopup.classList.remove('open');
+            mobileSizePopup.setAttribute('aria-hidden', 'true');
+        }
+        if (desktopCtaBtn) desktopCtaBtn.classList.remove('popup-active');
+        if (mobileCtaBtn) mobileCtaBtn.classList.remove('popup-active');
+    }
+
+    function toggleSizePopups() {
+        isSizePopupOpen = !isSizePopupOpen;
+        if (desktopSizePopup) {
+            desktopSizePopup.classList.toggle('open', isSizePopupOpen);
+            desktopSizePopup.setAttribute('aria-hidden', !isSizePopupOpen);
+        }
+        if (mobileSizePopup) {
+            mobileSizePopup.classList.toggle('open', isSizePopupOpen);
+            mobileSizePopup.setAttribute('aria-hidden', !isSizePopupOpen);
+        }
+        if (desktopCtaBtn) desktopCtaBtn.classList.toggle('popup-active', isSizePopupOpen);
+        if (mobileCtaBtn) mobileCtaBtn.classList.toggle('popup-active', isSizePopupOpen);
+    }
+
+    // Document click to close popups when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!isSizePopupOpen) return;
+        const isClickInside = (desktopCtaBtn && desktopCtaBtn.contains(e.target)) ||
+            (desktopSizePopup && desktopSizePopup.contains(e.target)) ||
+            (mobileCtaBtn && mobileCtaBtn.contains(e.target)) ||
+            (mobileSizePopup && mobileSizePopup.contains(e.target));
+        if (!isClickInside) {
+            closeSizePopups();
+        }
+    });
+
+    // CTA Button Click Handler
+    function handleCtaClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (currentIndex === 0) {
+            // Requirement 2: Compulsory click on "Get the Look >" button goes to T-Shirt (slide 1)
+            closeSizePopups();
+            goToSlide(1);
+        } else {
+            // Requirement 5: On 2nd to last page products (slides 1 to 6), clicking toggles the size popup side of the button
+            toggleSizePopups();
+        }
+    }
+
+    if (desktopCtaBtn) desktopCtaBtn.addEventListener('click', handleCtaClick);
+    if (mobileCtaBtn) mobileCtaBtn.addEventListener('click', handleCtaClick);
 
     // -------------------------------------------------------------------------
     // Slide Navigation & Flight Path State Engine
@@ -203,10 +294,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         isTransitioning = true;
+        closeSizePopups();
         currentIndex = targetIndex;
         const currentSlide = slides[currentIndex];
 
-        // 1. Smoothly update gradient via CSS custom properties (@property enables transitions)
+        // 1. Smoothly update gradient & shadow CSS custom properties
         root.style.setProperty('--bg-start', currentSlide.bgStart);
         root.style.setProperty('--bg-mid', currentSlide.bgMid);
         root.style.setProperty('--bg-end', currentSlide.bgEnd);
@@ -214,9 +306,22 @@ document.addEventListener('DOMContentLoaded', () => {
         root.style.setProperty('--current-accent', currentSlide.accent);
         root.style.setProperty('--shadow-top', currentSlide.shadowTop);
         root.style.setProperty('--shadow-width', currentSlide.shadowWidth);
+        root.style.setProperty('--shadow-height', currentSlide.shadowHeight || '42px');
+        root.style.setProperty('--shadow-opacity', currentSlide.shadowOpacity || '0.85');
+        root.style.setProperty('--shadow-mobile-top', currentSlide.shadowMobileTop || '71%');
+        root.style.setProperty('--shadow-mobile-width', currentSlide.shadowMobileWidth || '290px');
+
+        // Hide slider arrows on first page (Full Outfit)
+        if (sliderArrows) {
+            if (currentIndex === 0) {
+                sliderArrows.classList.add('arrows-hidden');
+            } else {
+                sliderArrows.classList.remove('arrows-hidden');
+            }
+        }
 
         // 2. Animate and update dynamic product texts with fade
-        const textElements = [categoryEl, titleEl, descEl, priceSaleEl, priceRegEl];
+        const textElements = [categoryEl, titleEl, descEl];
         textElements.forEach(el => {
             if (el) el.classList.add('fade-out');
         });
@@ -225,9 +330,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (categoryEl) categoryEl.textContent = currentSlide.category;
             if (titleEl) titleEl.textContent = currentSlide.headline;
             if (descEl) descEl.textContent = currentSlide.description;
-            if (priceSaleEl) priceSaleEl.textContent = currentSlide.priceSale;
-            if (priceRegEl) priceRegEl.textContent = currentSlide.priceRegular;
-            renderSizeOptions(currentSlide.sizes);
+
+            // Requirement 4: "Get the look >" button only in First page, respective product name in other sections
+            const label = currentSlide.buttonLabel || (currentIndex === 0 ? 'Get the look' : currentSlide.name);
+            if (desktopCtaText) desktopCtaText.textContent = label;
+            if (mobileCtaText) mobileCtaText.textContent = label;
+
+            // Update arrow icon behavior: slide 0 is forward arrow, slides 1-6 is size popup dropdown indicator
+            const ctaArrows = document.querySelectorAll('.cta-arrow-icon');
+            ctaArrows.forEach(icon => {
+                if (currentIndex === 0) {
+                    icon.classList.remove('icon-dropdown');
+                } else {
+                    icon.classList.add('icon-dropdown');
+                }
+            });
+
+            // Update size popup options for current product
+            renderSizePopupOptions(currentSlide.sizes);
 
             textElements.forEach(el => {
                 if (el) el.classList.remove('fade-out');
@@ -261,11 +381,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function nextSlide() {
         if (isTransitioning) return;
+        // Requirement 2: Compulsory click on "Get the Look >" on First page. No scroll/swipe/next.
+        if (currentIndex === 0) {
+            return;
+        }
         goToSlide(currentIndex + 1);
     }
 
     function prevSlide() {
         if (isTransitioning) return;
+        if (currentIndex === 0) {
+            return;
+        }
         goToSlide(currentIndex - 1);
     }
 
@@ -286,10 +413,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Direct click on the preview item at bottom right jumps to next slide
+    // Direct click on the preview item at bottom right jumps to next slide (only from slide 1 onwards)
     productElements.forEach((item) => {
         if (!item) return;
         item.addEventListener('click', (e) => {
+            if (currentIndex === 0) return; // Locked on slide 0
             if (item.classList.contains('state-preview')) {
                 e.stopPropagation();
                 nextSlide();
@@ -298,12 +426,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // Mouse Wheel Scroll (Smooth continuous scroll)
+    // Mouse Wheel Scroll (Smooth continuous scroll, disabled on slide 0)
     // -------------------------------------------------------------------------
     let wheelAccumulator = 0;
     const wheelThreshold = 35;
 
     window.addEventListener('wheel', (e) => {
+        // Requirement 2: User must click "Get the look >" on slide 0. Wheel is disabled.
+        if (currentIndex === 0) {
+            wheelAccumulator = 0;
+            return;
+        }
+
         wheelAccumulator += e.deltaY;
 
         if (Math.abs(wheelAccumulator) >= wheelThreshold) {
@@ -317,9 +451,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // -------------------------------------------------------------------------
-    // Keyboard Navigation
+    // Keyboard Navigation (disabled on slide 0)
     // -------------------------------------------------------------------------
     window.addEventListener('keydown', (e) => {
+        // Requirement 2: User must click "Get the look >" on slide 0. Keyboard is disabled.
+        if (currentIndex === 0) {
+            return;
+        }
+
         if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) {
             e.preventDefault();
             nextSlide();
@@ -330,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // Touch Gestures (Mobile Swipe Detection)
+    // Touch Gestures (Mobile Swipe Detection, disabled on slide 0)
     // -------------------------------------------------------------------------
     let touchStartY = 0;
     let touchStartX = 0;
@@ -344,6 +483,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     window.addEventListener('touchend', (e) => {
+        // Requirement 2: User must click "Get the look >" on slide 0. Swipe is disabled.
+        if (currentIndex === 0) {
+            return;
+        }
+
         if (!e.changedTouches || e.changedTouches.length === 0) return;
 
         const touchEndY = e.changedTouches[0].clientY;
@@ -372,17 +516,96 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // -------------------------------------------------------------------------
-    // Navigation Items Active State
+    // About Modal Dialog Controls & Background Blur
     // -------------------------------------------------------------------------
-    navItems.forEach((link) => {
-        link.addEventListener('click', (e) => {
+    const navAboutBtn = document.getElementById('nav-about');
+    const navOutfitsBtn = document.getElementById('nav-outfits');
+    const mobileAboutBtn = document.getElementById('mobile-about-btn');
+    const aboutModal = document.getElementById('about-modal');
+    const aboutCloseBtn = document.getElementById('about-close-btn');
+    const aboutBackdrop = document.getElementById('about-modal-backdrop');
+
+    function openAboutModal() {
+        // Requirement 2: Pop-up page opens in the same first page
+        if (currentIndex !== 0) {
+            goToSlide(0);
+        }
+        if (aboutModal) {
+            aboutModal.classList.add('open');
+            aboutModal.setAttribute('aria-hidden', 'false');
+        }
+        if (navAboutBtn) navAboutBtn.classList.add('active');
+        if (navOutfitsBtn) navOutfitsBtn.classList.remove('active');
+    }
+
+    function closeAboutModal() {
+        if (aboutModal) {
+            aboutModal.classList.remove('open');
+            aboutModal.setAttribute('aria-hidden', 'true');
+        }
+        if (navAboutBtn) navAboutBtn.classList.remove('active');
+        if (navOutfitsBtn) navOutfitsBtn.classList.add('active');
+    }
+
+    if (navAboutBtn) {
+        navAboutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navItems.forEach((l) => l.classList.remove('active'));
-            link.classList.add('active');
+            openAboutModal();
         });
+    }
+
+    if (mobileAboutBtn) {
+        mobileAboutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAboutModal();
+        });
+    }
+
+    if (navOutfitsBtn) {
+        navOutfitsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeAboutModal();
+            goToSlide(0);
+        });
+    }
+
+    if (aboutCloseBtn) {
+        aboutCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeAboutModal();
+        });
+    }
+
+    if (aboutBackdrop) {
+        aboutBackdrop.addEventListener('click', () => {
+            closeAboutModal();
+        });
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && aboutModal && aboutModal.classList.contains('open')) {
+            closeAboutModal();
+        }
     });
 
+    // -------------------------------------------------------------------------
+    // Requirement 3: Dexosa Logo 3-Second Spin on Tap/Click
+    // -------------------------------------------------------------------------
+    const dexosaSpinBtn = document.getElementById('dexosa-spin-btn');
+    const dexosaLogoImg = document.querySelector('.dexosa-logo-link .social-icon-img');
+
+    if (dexosaSpinBtn && dexosaLogoImg) {
+        dexosaSpinBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (dexosaLogoImg.classList.contains('spinning')) return;
+            dexosaLogoImg.classList.add('spinning');
+            setTimeout(() => {
+                dexosaLogoImg.classList.remove('spinning');
+            }, 3000);
+        });
+    }
+
     // Initialize first slide (Full Outfit - Golden Amber)
-    renderSizeOptions(slides[0].sizes);
     goToSlide(0);
 });
