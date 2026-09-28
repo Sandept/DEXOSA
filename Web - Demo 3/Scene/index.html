@@ -13,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=8">
 </head>
 
 <body>
@@ -107,6 +107,15 @@
                         <span class="size-popup-label">Size:</span>
                         <div class="size-popup-options" id="desktop-size-options" role="radiogroup"
                             aria-label="Available Sizes"></div>
+                        <span class="size-popup-divider" aria-hidden="true"></span>
+                        <button type="button" class="size-shop-btn" id="desktop-shop-btn" aria-label="Shop selected item">
+                            <span class="shop-btn-text">Shop</span>
+                            <svg class="shop-btn-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -134,6 +143,15 @@
                 <span class="size-popup-label">Size:</span>
                 <div class="size-popup-options" id="mobile-size-options" role="radiogroup" aria-label="Available Sizes">
                 </div>
+                <span class="size-popup-divider" aria-hidden="true"></span>
+                <button type="button" class="size-shop-btn" id="mobile-shop-btn" aria-label="Shop selected item">
+                    <span class="shop-btn-text">Shop</span>
+                    <svg class="shop-btn-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </button>
             </div>
             <button type="button" class="btn-get-look mobile-btn" id="mobile-cta-btn">
                 <span id="mobile-cta-text">Get the look</span>
@@ -204,7 +222,14 @@
         </div>
     </div>
 
-    <script src="script.js?v=7"></script>
+
+    <!-- Floating Toast Notification -->
+    <div class="shop-toast" id="shop-toast" aria-live="polite">
+        <div class="toast-indicator"></div>
+        <span class="toast-text" id="toast-text">T-Shirt (Size XL) added to order bag</span>
+    </div>
+
+    <script src="script.js?v=8"></script>
 </body>
 
 </html>

@@ -595,6 +595,14 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
+    max-width: 460px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.size-popup-options::-webkit-scrollbar {
+    display: none;
 }
 
 .size-chip {
@@ -630,6 +638,109 @@ body {
     font-weight: 700;
     transform: scale(1.06);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Pulsing effect on size chip when chosen */
+@keyframes chip-pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1.06);
+    }
+}
+
+.size-chip.pulse {
+    animation: chip-pulse 0.3s ease;
+}
+
+/* Divider between Size Options & Shop Button */
+.size-popup-divider {
+    display: block;
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.22);
+    margin: 0;
+    opacity: 0;
+    max-width: 0;
+    transition: opacity 0.28s ease, max-width 0.28s ease, margin 0.28s ease;
+}
+
+.size-popup.has-selection .size-popup-divider {
+    opacity: 1;
+    max-width: 1px;
+    margin: 0 4px;
+}
+
+/* "Shop" Button in Size Popup */
+.size-shop-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0;
+    max-width: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    background: var(--color-white);
+    color: var(--color-black);
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    pointer-events: none;
+    transition: max-width 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+        opacity 0.28s ease,
+        padding 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+        transform 0.22s var(--ease-flight),
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.25s ease,
+        visibility 0.28s ease;
+    white-space: nowrap;
+}
+
+.size-popup.has-selection .size-shop-btn {
+    opacity: 1;
+    visibility: visible;
+    max-width: 110px;
+    padding: 0 16px;
+    pointer-events: auto;
+}
+
+.size-shop-btn:hover {
+    background: var(--current-accent, #ffffff);
+    color: var(--color-black);
+    border-color: var(--current-accent, #ffffff);
+    transform: scale(1.06);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), 0 0 18px var(--glow-color);
+}
+
+.size-shop-btn:active {
+    transform: scale(0.96);
+}
+
+.shop-btn-icon {
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.22s ease;
+}
+
+.size-shop-btn:hover .shop-btn-icon {
+    transform: translateY(-1px) scale(1.1);
 }
 
 /* Right Hero Section (Pricing & Size Selector) */
@@ -976,6 +1087,445 @@ body {
 }
 
 /* ==========================================================================
+   SHOP CHECKOUT MODAL (Blur backdrop, rich product view & action)
+   ========================================================================== */
+.shop-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.38s ease, visibility 0.38s ease;
+    pointer-events: none;
+}
+
+.shop-modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.shop-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    cursor: pointer;
+}
+
+.shop-modal-dialog {
+    position: relative;
+    z-index: 2;
+    background: rgba(18, 20, 26, 0.88);
+    backdrop-filter: blur(36px);
+    -webkit-backdrop-filter: blur(36px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 28px;
+    padding: 38px 40px;
+    max-width: 780px;
+    width: 100%;
+    color: var(--color-white);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 0 0 50px var(--glow-color, rgba(255, 255, 255, 0.1));
+    transform: scale(0.92) translateY(24px);
+    transition: transform 0.38s cubic-bezier(0.19, 1, 0.22, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.shop-modal-overlay.open .shop-modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+.shop-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    z-index: 10;
+}
+
+.shop-close-btn:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+    transform: rotate(90deg) scale(1.08);
+}
+
+.shop-modal-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+    align-items: center;
+}
+
+.shop-modal-media {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.35));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 30px 20px 20px 20px;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.shop-media-glow {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: var(--glow-color, rgba(124, 184, 248, 0.35));
+    filter: blur(40px);
+    pointer-events: none;
+}
+
+.shop-modal-product-img {
+    position: relative;
+    max-width: 220px;
+    max-height: 220px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.5));
+    transition: transform 0.3s ease;
+}
+
+.shop-modal-media:hover .shop-modal-product-img {
+    transform: scale(1.05) translateY(-4px);
+}
+
+.shop-media-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.shop-badge-logo {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+.shop-modal-details {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.shop-badge-cat {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    color: var(--current-accent, #93C5FD);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.shop-product-title {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 3.2vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+}
+
+.shop-price-box {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.shop-price-curr {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-white);
+}
+
+.shop-price-old {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: line-through;
+}
+
+.shop-stock-pill {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.shop-meta-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.shop-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 7px 14px;
+}
+
+.shop-meta-label {
+    font-family: var(--font-heading);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+}
+
+.shop-meta-value {
+    font-family: var(--font-heading);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--current-accent, var(--color-white));
+}
+
+.shop-modal-desc {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 18px;
+}
+
+.shop-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.shop-feat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.shop-feat svg {
+    color: var(--current-accent, #86EFAC);
+    flex-shrink: 0;
+}
+
+.shop-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.btn-shop-checkout {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: 12px;
+    border: none;
+    background: var(--current-accent, var(--color-white));
+    color: var(--color-black);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    transition: all 0.22s var(--ease-flight);
+}
+
+.btn-shop-checkout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 22px var(--glow-color);
+}
+
+.btn-shop-checkout:active {
+    transform: scale(0.98);
+}
+
+.checkout-arrow {
+    transition: transform 0.2s ease;
+}
+
+.btn-shop-checkout:hover .checkout-arrow {
+    transform: translateX(4px);
+}
+
+.btn-shop-continue {
+    height: 48px;
+    padding: 0 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.22s ease;
+}
+
+.btn-shop-continue:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--color-white);
+}
+
+/* Order Success State within Modal */
+.shop-order-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+    animation: fadeIn 0.4s ease;
+}
+
+.shop-order-success.active {
+    display: flex;
+}
+
+.shop-modal-details.success-mode .shop-actions,
+.shop-modal-details.success-mode .shop-features,
+.shop-modal-details.success-mode .shop-modal-desc {
+    display: none;
+}
+
+.success-icon-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.2);
+    border: 2px solid #22c55e;
+    color: #4ade80;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.35);
+}
+
+.success-title {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.success-text {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 22px;
+    max-width: 320px;
+}
+
+.btn-shop-continue-success {
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--color-white);
+    color: var(--color-black);
+    font-family: var(--font-heading);
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-shop-continue-success:hover {
+    transform: scale(1.05);
+}
+
+/* Floating Toast */
+.shop-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(40px);
+    background: rgba(18, 20, 26, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50px;
+    padding: 10px 22px 10px 16px;
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 120;
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+    white-space: nowrap;
+}
+
+.shop-toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--current-accent, #22c55e);
+    box-shadow: 0 0 10px var(--current-accent, #22c55e);
+}
+
+/* ==========================================================================
    EXACT MOBILE / SMARTPHONE VIEW (< 768px)
    1:1 Match with User's Approved Design Layout
    ========================================================================== */
@@ -1202,12 +1752,67 @@ body {
         left: 50%;
         transform: translateX(-50%) translateY(10px) scale(0.92);
         margin-bottom: 0;
-        padding: 6px 14px;
+        padding: 6px 12px;
         box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+        max-width: calc(100vw - 28px);
+        justify-content: center;
+        gap: 6px;
     }
 
     .size-popup.mobile-size-popup.open {
         transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .size-popup.mobile-size-popup.has-selection .size-shop-btn {
+        max-width: 95px;
+        padding: 0 12px;
+        font-size: 12px;
+        height: 33px;
+    }
+
+    .size-popup.mobile-size-popup .size-chip {
+        min-width: 34px;
+        height: 33px;
+        padding: 0 9px;
+        font-size: 12px;
+    }
+
+    .size-popup.mobile-size-popup .size-popup-options {
+        max-width: 200px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Mobile Shop Modal */
+    .shop-modal-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .shop-modal-dialog {
+        padding: 32px 20px 24px 20px;
+        max-height: 88vh;
+        border-radius: 22px;
+    }
+
+    .shop-modal-media {
+        min-height: 180px;
+        padding: 16px;
+    }
+
+    .shop-modal-product-img {
+        max-height: 140px;
+    }
+
+    .shop-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-shop-checkout,
+    .btn-shop-continue {
+        width: 100%;
     }
 
     .mobile-btn {

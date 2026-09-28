@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
             headline: 'DSP INBARAJ',
             description: 'Inspired by the cinematic world of the movie "SCENE" — a signature head-to-toe ensemble designed with effortless proportion, capturing the bold charisma, dark tailored elegance, and distinctive on-screen character aesthetic.',
             sizes: ['S', 'M', 'L', 'XL'],
+            price: '$480',
+            priceRegular: '$620',
+            image: 'images/Full_Outfit.png',
+            sizeLinks: {
+                'default': 'https://link.amazon/B08sWMcLo'
+            },
             bgStart: '#FCCC6A',
             bgMid: '#D4953A',
             bgEnd: '#8C5A14',
@@ -38,7 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
             category: '01 / HEAVYWEIGHT APPAREL',
             headline: 'T-Shirt',
             description: 'Cut from 280 GSM luxury combed organic cotton with relaxed drop shoulders and contemporary boxy silhouette. Screen printed with high-density archival graphics.',
-            sizes: ['S', 'M', 'L', 'XL'],
+            sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'],
+            price: '$120',
+            priceRegular: '$160',
+            image: 'images/T-Shirt.png',
+            sizeLinks: {
+                'default': 'https://link.amazon/B08sWMcLo'
+            },
             bgStart: '#7CB8F8',
             bgMid: '#3B82F6',
             bgEnd: '#1A55B8',
@@ -53,12 +65,24 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             id: 2,
-            name: 'Shots',
-            buttonLabel: 'Shots',
+            name: 'Cargo Shorts',
+            buttonLabel: 'Cargo Shorts',
             category: '02 / RELAXED APPAREL',
-            headline: 'Shots',
+            headline: 'Cargo Shorts',
             description: 'Engineered in heavyweight French terry with deep utility pockets and elongated custom dip-dyed drawstrings. Tailored with a relaxed above-the-knee break.',
-            sizes: ['S', 'M', 'L', 'XL'],
+            sizes: ['S', 'M', 'L', 'XL', '2X', '3X'],
+            price: '$140',
+            priceRegular: '$190',
+            image: 'images/Shots.png',
+            sizeLinks: {
+                'S': 'https://link.amazon/B07LYNn0x',
+                'M': 'https://link.amazon/B0fjM0iPn',
+                'L': 'https://link.amazon/B0i18JMKZ',
+                'XL': 'https://link.amazon/B07c2DPu9',
+                '2X': 'https://link.amazon/B02gqHcv3',
+                '3X': 'https://link.amazon/B0hf3K6Cs',
+                'default': 'https://link.amazon/B07LYNn0x'
+            },
             bgStart: '#F4A87A',
             bgMid: '#E07B3A',
             bgEnd: '#A04C18',
@@ -79,6 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
             headline: 'Watch',
             description: 'Brushed surgical steel case with anti-reflective sapphire crystal and Japanese precision chronograph movement. Finished with a textured silicone deployment strap.',
             sizes: ['40mm', '42mm'],
+            price: '$320',
+            priceRegular: '$420',
+            image: 'images/Watch.png',
+            sizeLinks: {
+                '40mm': 'https://link.amazon/B02XeFEnZ',
+                '42mm': 'https://link.amazon/B0hLEjODz',
+                'default': 'https://link.amazon/B02XeFEnZ'
+            },
             bgStart: '#5ED8A8',
             bgMid: '#2EAA80',
             bgEnd: '#1A7A5A',
@@ -99,6 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
             headline: 'Bracelet',
             description: 'Hand-finished matte obsidian and brushed alloy accents strung with military-grade elastomeric cord. Distinctive whether worn solo or stacked.',
             sizes: ['S/M', 'M/L'],
+            price: '$85',
+            priceRegular: '$115',
+            image: 'images/Bracelet.png',
+            sizeLinks: {
+                'default': 'https://link.amazon/B0aUlq48V'
+            },
             bgStart: '#C9A0F0',
             bgMid: '#9966CC',
             bgEnd: '#5E3A8C',
@@ -116,9 +154,18 @@ document.addEventListener('DOMContentLoaded', () => {
             name: 'Key Chain',
             buttonLabel: 'Key Chain',
             category: '05 / LEATHER DETAILING',
-            headline: 'Key Chain',
+            headline: 'Key Chain & Knife',
             description: 'Custom debossed full-grain calfskin leather finished with spring-loaded gunmetal carabiner clasp and laser-engraved hardware detailing.',
-            sizes: ['ONE SIZE'],
+            sizes: ['Key Chain', 'Knife'],
+            price: '$45',
+            priceRegular: '$65',
+            image: 'images/Key_Chain.png',
+            sizeLinks: {
+                'Key Chain': 'https://link.amazon/B0fgS8qbq',
+                'Knife': 'https://link.amazon/B0aMB2WUm',
+                'ONE SIZE': 'https://link.amazon/B0fgS8qbq',
+                'default': 'https://link.amazon/B0fgS8qbq'
+            },
             bgStart: '#F4C080',
             bgMid: '#D4883A',
             bgEnd: '#8C5518',
@@ -138,7 +185,18 @@ document.addEventListener('DOMContentLoaded', () => {
             category: '06 / ERGONOMIC FOOTWEAR',
             headline: 'Slide',
             description: 'High-resilience dual-density molded EVA foam footbed with textured arch support and anti-slip grooved outsole for supreme indoor and street ease.',
-            sizes: ['8', '9', '10', '11'],
+            sizes: ['7', '8', '9', '10', '11'],
+            price: '$95',
+            priceRegular: '$130',
+            image: 'images/Slide.png',
+            sizeLinks: {
+                '7': 'https://link.amazon/B029bAkpf',
+                '8': 'https://link.amazon/B0i6vZNwq',
+                '9': 'https://link.amazon/B0dx8o3hA',
+                '10': 'https://link.amazon/B008qWWKI',
+                '11': 'https://link.amazon/B0cPtonSz',
+                'default': 'https://link.amazon/B029bAkpf'
+            },
             bgStart: '#F4A098',
             bgMid: '#E85D4A',
             bgEnd: '#A83020',
@@ -185,41 +243,112 @@ document.addEventListener('DOMContentLoaded', () => {
     const desktopCtaText = document.getElementById('desktop-cta-text');
     const desktopSizePopup = document.getElementById('desktop-size-popup');
     const desktopSizeOptions = document.getElementById('desktop-size-options');
+    const desktopShopBtn = document.getElementById('desktop-shop-btn');
 
     const mobileCtaBtn = document.getElementById('mobile-cta-btn');
     const mobileCtaText = document.getElementById('mobile-cta-text');
     const mobileSizePopup = document.getElementById('mobile-size-popup');
     const mobileSizeOptions = document.getElementById('mobile-size-options');
+    const mobileShopBtn = document.getElementById('mobile-shop-btn');
+
+    // Toast Notification Elements
+    const shopToast = document.getElementById('shop-toast');
+    const toastText = document.getElementById('toast-text');
 
     const root = document.documentElement;
+
+    // -------------------------------------------------------------------------
+    // Toast Notification Helper
+    // -------------------------------------------------------------------------
+    let toastTimer = null;
+    function showToast(msg) {
+        if (!shopToast || !toastText) return;
+        toastText.textContent = msg;
+        shopToast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            shopToast.classList.remove('show');
+        }, 2600);
+    }
 
     // -------------------------------------------------------------------------
     // Size Popup Renderer & Toggler
     // -------------------------------------------------------------------------
     function renderSizePopupOptions(sizes) {
+        const currentSlide = slides[currentIndex];
+        const hasSelection = Boolean(currentSlide.selectedSize);
+
+        // Reflect current selection status on size popups
+        if (desktopSizePopup) desktopSizePopup.classList.toggle('has-selection', hasSelection);
+        if (mobileSizePopup) mobileSizePopup.classList.toggle('has-selection', hasSelection);
+
         [desktopSizeOptions, mobileSizeOptions].forEach(container => {
             if (!container) return;
             container.innerHTML = '';
-            sizes.forEach((size, idx) => {
+            sizes.forEach((size) => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'size-chip' + (idx === 0 ? ' active' : '');
+                const isSelected = currentSlide.selectedSize === size;
+                btn.className = 'size-chip' + (isSelected ? ' active' : '');
                 btn.setAttribute('role', 'radio');
-                btn.setAttribute('aria-checked', idx === 0 ? 'true' : 'false');
+                btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
                 btn.setAttribute('data-size', size);
                 btn.textContent = size;
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    container.querySelectorAll('.size-chip').forEach(b => {
-                        b.classList.remove('active');
-                        b.setAttribute('aria-checked', 'false');
-                    });
-                    btn.classList.add('active');
-                    btn.setAttribute('aria-checked', 'true');
+                    selectSize(size);
                 });
                 container.appendChild(btn);
             });
         });
+    }
+
+    function selectSize(size) {
+        const currentSlide = slides[currentIndex];
+        currentSlide.selectedSize = size;
+
+        [desktopSizeOptions, mobileSizeOptions].forEach(container => {
+            if (!container) return;
+            container.querySelectorAll('.size-chip').forEach(b => {
+                const matches = b.getAttribute('data-size') === size;
+                b.classList.toggle('active', matches);
+                b.setAttribute('aria-checked', matches ? 'true' : 'false');
+                if (matches) {
+                    b.classList.remove('pulse');
+                    void b.offsetWidth; // re-trigger animation
+                    b.classList.add('pulse');
+                }
+            });
+        });
+
+        // Reveal the "Shop" button dynamically
+        if (desktopSizePopup) desktopSizePopup.classList.add('has-selection');
+        if (mobileSizePopup) mobileSizePopup.classList.add('has-selection');
+
+        showToast(`${currentSlide.name} (${size}) chosen • Tap "Shop" to order`);
+    }
+
+    // -------------------------------------------------------------------------
+    // Direct E-Commerce Shop Navigation Handler
+    // -------------------------------------------------------------------------
+    function handleShopClick(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const currentSlide = slides[currentIndex];
+        const size = currentSlide.selectedSize || currentSlide.sizes[0];
+
+        // Find destination link based on selected size
+        let targetUrl = '';
+        if (currentSlide.sizeLinks) {
+            targetUrl = currentSlide.sizeLinks[size] || currentSlide.sizeLinks['default'] || '';
+        }
+
+        if (targetUrl) {
+            showToast(`Opening ${currentSlide.name} (${size}) on Amazon...`);
+            window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        }
     }
 
     function closeSizePopups() {
@@ -580,6 +709,17 @@ document.addEventListener('DOMContentLoaded', () => {
         aboutBackdrop.addEventListener('click', () => {
             closeAboutModal();
         });
+    }
+
+    // -------------------------------------------------------------------------
+    // Shop Button Direct E-Commerce Navigation Listeners
+    // -------------------------------------------------------------------------
+    if (desktopShopBtn) {
+        desktopShopBtn.addEventListener('click', handleShopClick);
+    }
+
+    if (mobileShopBtn) {
+        mobileShopBtn.addEventListener('click', handleShopClick);
     }
 
     window.addEventListener('keydown', (e) => {
