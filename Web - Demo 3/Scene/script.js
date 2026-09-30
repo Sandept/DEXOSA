@@ -449,6 +449,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Toggle COP Reveal HUD visibility (only visible on Slide 0: Full Outfit)
+        const copHudEl = document.getElementById('cop-reveal-hud');
+        const mobileCopHudEl = document.getElementById('mobile-cop-hud');
+        if (currentIndex === 0) {
+            if (copHudEl) copHudEl.classList.remove('hud-hidden');
+            if (mobileCopHudEl) mobileCopHudEl.classList.remove('hud-hidden');
+        } else {
+            if (copHudEl) copHudEl.classList.add('hud-hidden');
+            if (mobileCopHudEl) mobileCopHudEl.classList.add('hud-hidden');
+            if (typeof deactivateAllCopPortions === 'function') {
+                deactivateAllCopPortions();
+            }
+        }
+
         // 2. Animate and update dynamic product texts with fade
         const textElements = [categoryEl, titleEl, descEl];
         textElements.forEach(el => {
@@ -745,6 +759,305 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 3000);
         });
     }
+
+    // -------------------------------------------------------------------------
+    // DSP Inbaraj COP Uniform Interactive Liquid 3D WebGL Reveal
+    // Swipe or touch the Full Outfit image to reveal COP uniform (2s fade)
+    // -------------------------------------------------------------------------
+    function initWebGLReveal() {
+        const canvas = document.getElementById('liquid-reveal-canvas');
+        const touchSurface = document.getElementById('reveal-touch-surface');
+        if (!canvas || !touchSurface) return;
+        
+        const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
+        if (!gl) return;
+
+        // Mask Canvas (2D) for interactive brush strokes
+        const maskCanvas = document.createElement('canvas');
+        maskCanvas.width = 256;
+        maskCanvas.height = 512;
+        const maskCtx = maskCanvas.getContext('2d');
+
+        let texCiv, texCop, texMask;
+        
+        function loadImage(src, base64Fallback) {
+            return new Promise(resolve => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = () => {
+                    // If regular load fails (e.g. CORS on file://), use the base64 string
+                    if (base64Fallback) {
+                        const fallbackImg = new Image();
+                        fallbackImg.onload = () => resolve(fallbackImg);
+                        fallbackImg.onerror = () => resolve(fallbackImg);
+                        fallbackImg.src = base64Fallback;
+                    } else {
+                        resolve(img);
+                    }
+                };
+                // Try regular path first
+                img.src = src;
+                if (img.complete && img.naturalWidth > 0) resolve(img);
+            });
+        }
+
+        const civB64 = window.FULL_OUTFIT_B64 || null;
+        const copB64 = window.COP_B64 || null;
+
+        Promise.all([
+            loadImage('images/Full_Outfit.png', civB64),
+            loadImage('images/COP.png', copB64)
+        ]).then(([imgCiv, imgCop]) => {
+            // Match canvas size to image aspect, high enough resolution
+            canvas.width = imgCiv.width || 1024;
+            canvas.height = imgCiv.height || 1024;
+            
+            // Setup WebGL
+            const vsSource = `
+                attribute vec2 a_position;
+                varying vec2 v_texCoord;
+                void main() {
+                    gl_Position = vec4(a_position, 0.0, 1.0);
+                    v_texCoord = a_position * 0.5 + 0.5;
+                    v_texCoord.y = 1.0 - v_texCoord.y; // flip Y
+                }
+            `;
+
+            const fsSource = `
+                precision mediump float;
+                varying vec2 v_texCoord;
+                uniform sampler2D u_texCiv;
+                uniform sampler2D u_texCop;
+                uniform sampler2D u_texMask;
+                uniform float u_time;
+
+                // Simple 2D noise
+                vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+                float snoise(vec2 v) {
+                  const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+                  vec2 i  = floor(v + dot(v, C.yy) );
+                  vec2 x0 = v -   i + dot(i, C.xx);
+                  vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+                  vec4 x12 = x0.xyxy + C.xxzz;
+                  x12.xy -= i1;
+                  i = mod289(i);
+                  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+                  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+                  m = m*m; m = m*m;
+                  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+                  vec3 h = abs(x) - 0.5;
+                  vec3 ox = floor(x + 0.5);
+                  vec3 a0 = x - ox;
+                  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+                  vec3 g;
+                  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+                  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+                  return 130.0 * dot(m, g);
+                }
+
+                void main() {
+                    float mask = texture2D(u_texMask, v_texCoord).r;
+                    
+                    // Add fluid noise to mask
+                    float noiseVal = snoise(v_texCoord * 8.0 + u_time * 1.2);
+                    float distortedMask = smoothstep(0.1, 0.8, mask + noiseVal * 0.3 * mask);
+                    
+                    // Liquid distortion amount based on mask edge
+                    float edge = smoothstep(0.0, 0.2, distortedMask) - smoothstep(0.7, 1.0, distortedMask);
+                    vec2 distortion = vec2(snoise(v_texCoord * 15.0 - u_time), snoise(v_texCoord * 15.0 + u_time)) * 0.03 * edge;
+                    
+                    vec2 uv = v_texCoord + distortion;
+                    
+                    vec4 civColor = texture2D(u_texCiv, uv);
+                    vec4 copColor = texture2D(u_texCop, uv);
+                    
+                    // Glassy edge highlight
+                    vec4 glass = vec4(0.8, 0.9, 1.0, 1.0) * edge * 0.6;
+                    
+                    vec3 finalColor = mix(civColor.rgb, copColor.rgb, distortedMask) + glass.rgb * copColor.a;
+                    float outAlpha = mix(civColor.a, copColor.a, distortedMask);
+                    
+                    gl_FragColor = vec4(finalColor, outAlpha);
+                }
+            `;
+
+            function compileShader(type, source) {
+                const s = gl.createShader(type);
+                gl.shaderSource(s, source);
+                gl.compileShader(s);
+                if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+                    console.error('WebGL Compile Error:', gl.getShaderInfoLog(s));
+                }
+                return s;
+            }
+
+            const program = gl.createProgram();
+            gl.attachShader(program, compileShader(gl.VERTEX_SHADER, vsSource));
+            gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, fsSource));
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            const posBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                -1, -1,  1, -1,  -1, 1,
+                -1, 1,   1, -1,   1, 1
+            ]), gl.STATIC_DRAW);
+
+            const posAttr = gl.getAttribLocation(program, 'a_position');
+            gl.enableVertexAttribArray(posAttr);
+            gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
+
+            function createTexture(image, unit, base64Fallback) {
+                const tex = gl.createTexture();
+                gl.activeTexture(gl.TEXTURE0 + unit);
+                gl.bindTexture(gl.TEXTURE_2D, tex);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                
+                // Initialize with 1x1 transparent pixel so it doesn't render black while loading/failing
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,0,0,0]));
+
+                if(image) {
+                    try {
+                        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+                    } catch (e) {
+                        console.warn('WebGL CORS error, switching to base64 data URI.');
+                        if (base64Fallback) {
+                            const fb = new Image();
+                            fb.onload = () => {
+                                gl.activeTexture(gl.TEXTURE0 + unit);
+                                gl.bindTexture(gl.TEXTURE_2D, tex);
+                                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, fb);
+                            };
+                            fb.src = base64Fallback;
+                        }
+                    }
+                }
+                return tex;
+            }
+
+            texCiv = createTexture(imgCiv, 0, civB64);
+            texCop = createTexture(imgCop, 1, copB64);
+            
+            // Mask texture
+            texMask = gl.createTexture();
+            gl.activeTexture(gl.TEXTURE2);
+            gl.bindTexture(gl.TEXTURE_2D, texMask);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+            gl.uniform1i(gl.getUniformLocation(program, 'u_texCiv'), 0);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_texCop'), 1);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_texMask'), 2);
+
+            const timeLoc = gl.getUniformLocation(program, 'u_time');
+
+            // Splats for interaction
+            const splats = [];
+            let lastPos = null;
+
+            function addSplat(x, y) {
+                splats.push({ x, y, t: performance.now() });
+            }
+
+            function handlePointer(e) {
+                if (currentIndex !== 0) return;
+                const rect = touchSurface.getBoundingClientRect();
+                let clientX, clientY;
+                if (e.touches && e.touches.length > 0) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+                const x = (clientX - rect.left) / rect.width;
+                const y = (clientY - rect.top) / rect.height;
+                
+                if (lastPos) {
+                    const dist = Math.hypot(x - lastPos.x, y - lastPos.y);
+                    const steps = Math.ceil(dist / 0.02);
+                    for(let i=1; i<=steps; i++) {
+                        addSplat(
+                            lastPos.x + (x - lastPos.x) * (i/steps),
+                            lastPos.y + (y - lastPos.y) * (i/steps)
+                        );
+                    }
+                } else {
+                    addSplat(x, y);
+                }
+                lastPos = {x, y};
+            }
+
+            touchSurface.addEventListener('mouseenter', (e) => { lastPos = null; handlePointer(e); });
+            touchSurface.addEventListener('mouseleave', () => { lastPos = null; });
+            touchSurface.addEventListener('mousemove', (e) => { handlePointer(e); });
+
+            touchSurface.addEventListener('touchstart', (e) => { lastPos = null; handlePointer(e); }, {passive: true});
+            touchSurface.addEventListener('touchmove', (e) => { handlePointer(e); }, {passive: true});
+            touchSurface.addEventListener('touchend', () => { lastPos = null; });
+
+            function render(time) {
+                gl.uniform1f(timeLoc, time * 0.001);
+
+                // Update Mask Canvas
+                maskCtx.fillStyle = 'black';
+                maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
+
+                const now = performance.now();
+                const radiusX = maskCanvas.width * 0.22;
+                const radiusY = maskCanvas.height * 0.12;
+                const radius = Math.max(radiusX, radiusY);
+                
+                for (let i = splats.length - 1; i >= 0; i--) {
+                    const s = splats[i];
+                    const age = now - s.t;
+                    if (age > 2000) { // 2 seconds fade
+                        splats.splice(i, 1);
+                        continue;
+                    }
+                    // Ease out alpha
+                    const alpha = Math.pow(1 - (age / 2000), 1.5);
+                    
+                    const grad = maskCtx.createRadialGradient(
+                        s.x * maskCanvas.width, s.y * maskCanvas.height, 0,
+                        s.x * maskCanvas.width, s.y * maskCanvas.height, radius
+                    );
+                    grad.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+                    grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    
+                    maskCtx.fillStyle = grad;
+                    maskCtx.beginPath();
+                    // Draw elliptical splat
+                    maskCtx.ellipse(s.x * maskCanvas.width, s.y * maskCanvas.height, radiusX, radiusY, 0, 0, Math.PI * 2);
+                    maskCtx.fill();
+                }
+
+                // Upload Mask Texture
+                gl.activeTexture(gl.TEXTURE2);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, maskCanvas);
+
+                // Draw
+                gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+                gl.clearColor(0,0,0,0);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+        });
+    }
+
+    initWebGLReveal();
 
     // Initialize first slide (Full Outfit - Golden Amber)
     goToSlide(0);
