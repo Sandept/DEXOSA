@@ -8,15 +8,16 @@ import {
 
 const FontStyles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;700&family=Permanent+Marker&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,800;1,400;1,800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;700&family=Permanent+Marker&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,800;1,400;1,800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,900;1,9..144,300&display=swap');
     
-    body { margin: 0; padding: 0; overflow-x: hidden; background-color: #F5F2FC; -webkit-tap-highlight-color: transparent; }
+    body { margin: 0; padding: 0; overflow-x: hidden; background-color: #F4E9D0; -webkit-tap-highlight-color: transparent; }
     
     .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
     .font-marker { font-family: 'Permanent Marker', cursive; }
     .font-oswald { font-family: 'Oswald', sans-serif; }
     .font-inter { font-family: 'Inter', sans-serif; }
     .font-caveat { font-family: 'Caveat', cursive; }
+    .font-fraunces { font-family: 'Fraunces', serif; }
 
     .brush-underline-orange { position: relative; display: inline-block; }
     .brush-underline-orange::after {
@@ -41,6 +42,17 @@ const FontStyles = () => (
       margin-top: -10px; padding-top: 15px;
     }
 
+    @media (min-width: 768px) {
+      .book-page-left { border-radius: 40px 10px 10px 60px; transform: rotateY(4deg); box-shadow: inset -20px 0 30px -20px rgba(0,0,0,0.1); transform-origin: right center; }
+      .book-page-right { border-radius: 10px 40px 60px 10px; transform: rotateY(-4deg); box-shadow: inset 20px 0 30px -20px rgba(0,0,0,0.1), drop-shadow(0 18px 18px rgba(58,44,92,0.35)); transform-origin: left center; }
+      .book-spine { width: 4%; max-width: 40px; background: linear-gradient(to right, #e5d5b5, #d6c4a0, #e5d5b5); border-top: 2px solid #3A2C5C; border-bottom: 2px solid #3A2C5C; z-index: 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
+    }
+    @media (max-width: 767px) {
+      .book-page-left { border-radius: 40px 40px 0 0; border-bottom: none; }
+      .book-page-right { border-radius: 0 0 40px 40px; border-top: none; box-shadow: drop-shadow(0 18px 18px rgba(58,44,92,0.35)); }
+      .book-spine { height: 24px; width: 100%; background: linear-gradient(to bottom, #e5d5b5, #d6c4a0, #e5d5b5); border-left: 2px solid #3A2C5C; border-right: 2px solid #3A2C5C; z-index: 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
+    }
+
     .blob-bg { position: absolute; border-radius: 50%; filter: blur(60px); z-index: 0; opacity: 0.5; }
     @media (min-width: 768px) { .blob-bg { filter: blur(80px); } }
   `}</style>
@@ -62,19 +74,31 @@ const projectsData = [
 
 const Logo = ({ className = "h-8", theme = "dark" }: { className?: string, theme?: string }) => (
   <img
-    src={theme === 'dark' ? './DEX_Logo.png' : './DS.png'}
+    src={theme === 'dark' || theme === 'storybook' ? './DEX_Logo.png' : './DS.png'}
     alt="DEXOSA Logo"
     className={`h-8 sm:h-10 object-contain ${className}`}
+    style={{
+      mixBlendMode: theme === 'storybook' ? 'multiply' : 'normal',
+      filter: theme === 'storybook' ? 'brightness(0) saturate(100%) invert(18%) sepia(26%) saturate(2284%) hue-rotate(223deg) brightness(93%) contrast(92%) drop-shadow(0px 0px 0px #3A2C5C)' : 'none'
+    }}
   />
 );
 
-const Navbar = ({ currentPage, setPage, theme }: { currentPage: string, setPage: (p: string) => void, theme: 'lavender' | 'street' | 'playful' }) => {
+const pageTransition: any = {
+  initial: { opacity: 0, y: 15, scale: 0.99 },
+  animate: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: -15, scale: 0.99 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+};
+
+const Navbar = ({ currentPage, setPage, theme }: { currentPage: string, setPage: (p: string) => void, theme: 'lavender' | 'street' | 'playful' | 'storybook' }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const getNavStyle = () => {
     switch (theme) {
       case 'street': return 'bg-transparent text-white font-oswald uppercase text-base';
       case 'playful': return 'bg-transparent text-white font-inter text-sm sm:text-base';
+      case 'storybook': return 'bg-transparent text-[#3A2C5C] font-inter text-sm sm:text-base font-semibold';
       default: return 'bg-transparent text-gray-800 font-jakarta text-sm sm:text-base';
     }
   };
@@ -100,7 +124,8 @@ const Navbar = ({ currentPage, setPage, theme }: { currentPage: string, setPage:
               key={link.id}
               onClick={() => setPage(link.id)}
               className={`hover:opacity-70 transition-opacity ${currentPage === link.id ? 'font-bold' : ''} 
-                ${theme === 'playful' && currentPage === link.id ? 'text-[#C8F51A]' : ''}`}
+                ${theme === 'playful' && currentPage === link.id ? 'text-[#C8F51A]' : ''}
+                ${theme === 'storybook' && currentPage === link.id ? 'border-b-2 border-[#3A2C5C]' : ''}`}
             >
               {link.label}
             </button>
@@ -114,11 +139,16 @@ const Navbar = ({ currentPage, setPage, theme }: { currentPage: string, setPage:
               Enquire Now
             </button>
           )}
+          {theme === 'storybook' && currentPage !== 'contact' && (
+            <button onClick={() => setPage('contact')} className="bg-[#C23D3D] text-[#F4E9D0] border-2 border-[#3A2C5C] px-6 py-2.5 font-inter font-bold hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[6px_6px_0px_#3A2C5C] shadow-[4px_4px_0px_#3A2C5C] transition-all" style={{ borderRadius: '30px 26px 28px 24px' }}>
+              Enquire Now
+            </button>
+          )}
         </div>
 
         {/* Mobile Toggle (Hamburger) */}
         <button className="md:hidden z-50 relative p-2" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} className={theme === 'lavender' ? 'text-black' : 'text-white'} /> : <Menu size={24} className={theme === 'lavender' ? 'text-black' : 'text-white'} />}
+          {isOpen ? <X size={24} className={(theme === 'lavender' || theme === 'storybook') ? 'text-black' : 'text-white'} /> : <Menu size={24} className={(theme === 'lavender' || theme === 'storybook') ? 'text-black' : 'text-white'} />}
         </button>
       </div>
 
@@ -130,7 +160,7 @@ const Navbar = ({ currentPage, setPage, theme }: { currentPage: string, setPage:
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className={`fixed inset-0 h-[100dvh] w-full z-40 flex flex-col items-center justify-center gap-8 text-2xl
-              ${theme === 'street' || theme === 'playful' ? 'bg-[#0B0B14] text-white' : 'bg-white text-black'}`}
+              ${(theme === 'street' || theme === 'playful') ? 'bg-[#0B0B14] text-white' : 'bg-[#F4E9D0] text-[#3A2C5C]'}`}
           >
             {navLinks.map(link => (
               <button
@@ -146,6 +176,11 @@ const Navbar = ({ currentPage, setPage, theme }: { currentPage: string, setPage:
                 Enquire Now
               </button>
             )}
+            {theme === 'storybook' && currentPage !== 'contact' && (
+              <button onClick={() => { setPage('contact'); setIsOpen(false); }} className="mt-4 bg-[#C23D3D] text-[#F4E9D0] border-2 border-[#3A2C5C] px-8 py-3 font-inter font-bold hover:shadow-[4px_4px_0px_#3A2C5C] transition-all" style={{ borderRadius: '30px 26px 28px 24px' }}>
+                Enquire Now
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -156,110 +191,144 @@ const Navbar = ({ currentPage, setPage, theme }: { currentPage: string, setPage:
 const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
   return (
     <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="bg-[#F5F2FC] min-h-screen p-2 sm:p-4 font-jakarta relative"
+      {...pageTransition}
+      className="bg-[#F4E9D0] min-h-screen font-inter relative pb-20"
+      style={{
+        backgroundImage: 'radial-gradient(#3A2C5C 1px, transparent 1px)',
+        backgroundSize: '24px 24px',
+        backgroundPosition: '0 0, 12px 12px',
+        backgroundColor: '#F4E9D0'
+      }}
     >
-      <div className="max-w-[1400px] mx-auto bg-white rounded-[24px] sm:rounded-[36px] min-h-[95vh] relative overflow-hidden shadow-sm flex flex-col pb-4">
-        <Navbar currentPage="home" setPage={setPage} theme="lavender" />
+      <Navbar currentPage="home" setPage={setPage} theme="storybook" />
 
-        {/* Main Hero Area */}
-        <div className="flex-1 flex flex-col mt-24 sm:mt-32 lg:mt-40 p-4 sm:p-6 lg:p-12">
+      {/* Main Hero Area - Book Spread */}
+      <div className="max-w-[1280px] mx-auto pt-24 sm:pt-32 px-4 sm:px-8">
 
-          {/* Split Headline & Model */}
-          <div className="relative flex flex-col md:flex-row justify-between items-center w-full z-10 mb-8 sm:mb-12 lg:mb-16 pt-4 md:pt-0">
-            {/* Mobile Headline (Top Stacked) */}
-            <div className="md:hidden text-center z-20 w-full mb-4">
-              <h1 className="text-[44px] leading-[1.05]">
-                <span className="font-bold italic text-black block">Build Your</span>
-                <span className="font-extrabold uppercase text-[#8B6FD6] block tracking-tight">BRAND</span>
-              </h1>
-            </div>
+        <div className="flex flex-col md:flex-row items-stretch justify-center md:[perspective:1400px]">
+          {/* Left Page */}
+          <div className="w-full md:w-[48%] bg-[#F4E9D0] border-2 border-[#3A2C5C] p-6 sm:p-12 xl:p-16 relative z-10 book-page-left">
+            {/* Torn edge decoration top */}
+            <div className="absolute top-0 left-8 right-8 h-4 border-b-2 border-dashed border-[#3A2C5C] opacity-30"></div>
 
-            <div className="text-left z-20 hidden md:block md:w-1/3">
-              <span className="font-bold italic text-black text-5xl lg:text-7xl block mb-2">Build Your</span>
-              <span className="font-extrabold uppercase text-[#8B6FD6] text-6xl lg:text-9xl block tracking-tighter">BRAND</span>
-            </div>
+            <div className="flex flex-col h-full justify-between">
+              <div>
+                <span className="font-inter font-semibold text-[#A8D6B8] uppercase tracking-[0.25em] text-[11px] bg-[#3A2C5C] px-3 py-1 rounded-full mb-6 inline-block border-2 border-[#3A2C5C] shadow-[2px_2px_0_#3A2C5C]">01 • Welcome</span>
 
-            {/* Responsive Center Graphic (Tall rounded box on mobile to match screenshot) */}
-            <div className="relative w-full md:w-1/3 flex justify-center my-2 md:my-0 z-10 shrink-0">
-              <div className="w-[170px] h-[210px] sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-96 lg:h-96 rounded-t-[30px] rounded-b-[85px] md:rounded-full bg-[#8B6FD6] relative flex items-center justify-center shadow-inner">
-                <div className="absolute w-[130%] h-[115%] rounded-full border border-gray-100 -z-10" />
-                <img src="./Spen-Pic.png" alt="Model" className="absolute bottom-0 w-[110%] h-[125%] object-cover rounded-b-[85px] md:rounded-b-full shadow-2xl" />
+                <h1 className="font-fraunces text-5xl sm:text-7xl xl:text-[92px] leading-[0.88] text-[#3A2C5C] font-black mt-4 mb-4">
+                  Build <br />
+                  <span className="italic font-light text-[#E08244]">Your</span><br />
+                  BRAND.
+                </h1>
+
+                <h1 className="font-fraunces text-5xl sm:text-7xl xl:text-[92px] leading-[0.88] text-[#3A2C5C] font-black mt-8">
+                  Own <br />
+                  <span className="italic font-light text-[#C23D3D]">Your</span><br />
+                  FUTURE.
+                </h1>
               </div>
-            </div>
 
-            {/* Mobile Headline (Bottom Stacked) */}
-            <div className="md:hidden text-center z-20 w-full mt-4 mb-2">
-              <h1 className="text-[44px] leading-[1.05] relative inline-block">
-                <span className="font-bold italic text-black block">Own Your</span>
-                <span className="font-extrabold uppercase text-[#8B6FD6] block tracking-tight">FUTURE</span>
-                <Star className="absolute top-1 -right-8 text-[#8B6FD6] fill-[#8B6FD6] w-7 h-7" />
-              </h1>
-            </div>
-
-            <div className="text-right z-20 hidden md:block md:w-1/3">
-              <span className="font-bold italic text-black text-5xl lg:text-7xl block mb-2 relative">
-                Own Your
-                <Star className="absolute -top-10 -right-10 text-[#8B6FD6] fill-[#8B6FD6]" size={40} />
-              </span>
-              <span className="font-extrabold uppercase text-[#8B6FD6] text-6xl lg:text-9xl block tracking-tighter">FUTURE</span>
+              <div className="mt-12 flex flex-col sm:flex-row items-center gap-4">
+                <button onClick={() => setPage('portfolio')} className="bg-[#C23D3D] text-[#F4E9D0] border-2 border-[#3A2C5C] px-7 py-4 font-inter font-bold text-sm sm:text-base flex items-center gap-2 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[6px_6px_0px_#3A2C5C] shadow-[4px_4px_0px_#3A2C5C] transition-all w-full sm:w-auto justify-center" style={{ borderRadius: '30px 26px 28px 24px' }}>
+                  Our Works <ArrowRight size={18} />
+                </button>
+                <button onClick={() => setPage('products')} className="bg-[#E08244] text-[#3A2C5C] border-2 border-[#3A2C5C] px-7 py-4 font-inter font-bold text-sm sm:text-base flex items-center gap-2 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[6px_6px_0px_#3A2C5C] shadow-[4px_4px_0px_#3A2C5C] transition-all w-full sm:w-auto justify-center" style={{ borderRadius: '24px 30px 22px 28px' }}>
+                  Products <ArrowRight size={18} />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Large Purple Panel */}
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="bg-[#8B6FD6] rounded-[32px] p-6 sm:p-8 lg:p-12 text-white flex flex-col lg:flex-row gap-8 lg:gap-12 justify-between relative overflow-hidden mt-2"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+          {/* Spine center */}
+          <div className="book-spine"></div>
 
-            {/* Panel Left */}
-            <div className="lg:w-1/2 z-10 flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-6">
-                <Star size={12} className="fill-white" /> AI-Powered Studio
-              </div>
-              {/* Action Buttons row - side-by-side on mobile */}
-              <div className="flex flex-row items-center justify-center lg:justify-start gap-3 w-full sm:w-auto">
-                <button onClick={() => setPage('portfolio')} className="bg-[#111] hover:bg-black text-white px-5 sm:px-8 py-2.5 sm:py-4 rounded-full font-semibold flex items-center justify-center gap-2 transition group text-sm sm:text-base shrink-0 shadow-lg">
-                  Our Works
-                  <span className="bg-white/20 p-1 rounded-full group-hover:translate-x-1 transition-transform">
-                    <ArrowRight size={14} />
-                  </span>
-                </button>
-                <button onClick={() => setPage('products')} className="bg-white/20 hover:bg-white/30 text-white px-6 sm:px-8 py-2.5 sm:py-4 rounded-full font-semibold flex items-center justify-center gap-2 transition group text-sm sm:text-base shrink-0 shadow-lg">
-                  Products
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    <ArrowRight size={16} />
-                  </span>
-                </button>
-              </div>
-            </div>
+          {/* Right Page */}
+          <div className="w-full md:w-[48%] bg-[#A8D6B8] border-2 border-[#3A2C5C] p-6 sm:p-12 xl:p-16 relative z-10 book-page-right">
+            {/* Washi tape */}
+            <div className="absolute -top-3 right-12 w-24 h-8 bg-[#EFE0BE]/80 rotate-[3deg] border-2 border-dashed border-[#3A2C5C]/30 shadow-sm z-20"></div>
 
-            {/* Panel Right (Features & Featured Card) */}
-            <div className="lg:w-1/2 flex flex-col items-center lg:items-end justify-center z-10 w-full">
-              {/* Icons Row - exactly side-by-side horizontally */}
-              <div className="flex flex-row justify-center gap-8 sm:gap-8 mb-8 text-xs sm:text-sm font-medium text-white mt-8 lg:mt-0">
-                <div className="flex flex-col items-center gap-1.5"><ShoppingBag size={20} className="opacity-90" /> Deals</div>
-                <div className="flex flex-col items-center gap-1.5"><Code size={20} className="opacity-90" /> Websites</div>
-                <div className="flex flex-col items-center gap-1.5"><Palette size={20} className="opacity-90" /> Portfolios</div>
+            <div className="flex flex-col h-full items-center justify-center relative">
+
+              <div className="relative mb-8 w-full max-w-[342px] sm:max-w-[300px] flex items-center justify-center">
+
+                {/* Merged Spen-Pic with Dha.png Background */}
+                <div className="bg-[#F4E9D0] border-[3px] border-[#3A2C5C] p-4 shadow-[0_30px_40px_-10px_rgba(58,44,92,0.35)] relative rotate-[-2deg] w-full z-10"
+                  style={{ clipPath: 'polygon(2% 0, 100% 4%, 96% 100%, 0 98%)' }}>
+
+                  <div className="relative w-full aspect-square border-2 border-[#3A2C5C] overflow-hidden">
+                    {/* Background Image (Adjusted to hide the cut top edge) */}
+                    <img
+                      src="./Dha.png"
+                      alt="Background Model"
+                      className="absolute inset-0 w-full h-full object-cover z-0 translate-x-[60px] translate-y-[20px] scale-[1.15]"
+                    />
+
+                    {/* Foreground Transparent Model (Adjusted to hide the cut side edge) */}
+                    <img
+                      src="./Spen-Pic.png"
+                      alt="Model"
+                      className="absolute inset-0 w-full h-full object-cover z-10 translate-x-[-50px] translate-y-[20px] scale-[0.85]"
+                    />
+                  </div>
+
+                  {/* Floating Star */}
+                  <Star className="absolute -top-6 -right-6 text-[#E08244] fill-[#E08244] w-12 h-12 rotate-[15deg] drop-shadow-[2px_2px_0_#3A2C5C]" strokeWidth={1.5} color="#3A2C5C" />
+                </div>
+
+                {/* Spline Robot (Floating in the gap) */}
+                <div className="absolute top-[-550px] right-[-140px] sm:top-[-100px] sm:right-[450px] w-[270px] h-[258px] sm:w-[320px] sm:h-[350px] z-30 pointer-events-none drop-shadow-2xl">
+                  {/* Nested wrapper expands the internal canvas to prevent hand clipping and hides watermark */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[110%] overflow-hidden">
+                    <iframe
+                      src="https://my.spline.design/genkubgreetingrobot-hxzMy88o7IpYzzco3fPe7tu0/"
+                      frameBorder="0"
+                      className="pointer-events-auto absolute"
+                      style={{
+                        background: 'transparent',
+                        width: '120%',
+                        height: 'calc(100% + 140px)',
+                        top: '-70px',
+                        left: 0
+                      }}
+                      title="Greeting Robot"
+                    ></iframe>
+                  </div>
+                </div>
+              </div>
+
+              <div className="font-inter font-semibold text-[#3A2C5C] text-xs bg-[#F4E9D0] px-3 py-1 rounded-full mb-6 inline-flex items-center gap-2 border-2 border-[#3A2C5C] shadow-[2px_2px_0_#3A2C5C] rotate-[1deg] relative z-20">
+                <Star size={12} className="fill-[#3A2C5C]" /> FOUNDERS <Star size={12} className="fill-[#3A2C5C]" />
+              </div>
+
+              {/* Badges/Icons Row */}
+              <div className="flex flex-row justify-center gap-2 sm:gap-4 text-xs sm:text-sm font-fraunces italic text-[#3A2C5C] mb-8 font-bold">
+                <div className="flex flex-col items-center gap-1.5 bg-[#F4E9D0] px-3 sm:px-4 py-2 border-2 border-[#3A2C5C] rounded-full shadow-[2px_2px_0_#3A2C5C] rotate-[2deg]">
+                  <ShoppingBag size={18} /> <span>Deals</span>
+                </div>
+                <div className="flex flex-col items-center gap-1.5 bg-[#F4E9D0] px-3 sm:px-4 py-2 border-2 border-[#3A2C5C] rounded-full shadow-[2px_2px_0_#3A2C5C] rotate-[-3deg]">
+                  <Code size={18} /> <span>Websites</span>
+                </div>
+                <div className="flex flex-col items-center gap-1.5 bg-[#F4E9D0] px-3 sm:px-4 py-2 border-2 border-[#3A2C5C] rounded-full shadow-[2px_2px_0_#3A2C5C] rotate-[1deg]">
+                  <Palette size={18} /> <span>Portfolios</span>
+                </div>
               </div>
 
               {/* Featured Card */}
-              <div className="bg-white rounded-[24px] p-3 sm:p-4 text-black flex items-center gap-4 shadow-xl w-full max-w-[320px] sm:max-w-sm mx-auto lg:mx-0">
-                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=200" alt="AI Custom Portfolio" className="w-[84px] h-[96px] sm:w-24 sm:h-28 rounded-[16px] object-cover shrink-0 border border-gray-100" />
+              <div className="bg-[#EFE0BE] border-2 border-[#3A2C5C] p-4 flex items-center gap-4 shadow-[6px_6px_0_#3A2C5C] rotate-[1deg] w-full max-w-[340px]" style={{ borderRadius: '24px 36px 26px 32px' }}>
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=200" alt="AI Custom Portfolio" className="w-20 h-24 object-cover border-2 border-[#3A2C5C] rounded-[12px]" />
                 <div className="flex-1">
-                  <span className="text-[10px] sm:text-xs font-bold text-[#8B6FD6] uppercase tracking-wider block mb-1">Featured Service</span>
-                  <h3 className="font-bold text-[15px] sm:text-lg leading-tight mb-2.5">Custom AI Portfolio</h3>
-                  <button onClick={() => setPage('contact')} className="w-full bg-[#E9E2F8] text-[#8B6FD6] px-3 py-2 rounded-full text-xs sm:text-sm font-bold flex items-center justify-center gap-1 hover:bg-[#8B6FD6] hover:text-white transition">
+                  <span className="font-inter font-bold text-[#C23D3D] text-[10px] uppercase tracking-widest block mb-1">Featured Service</span>
+                  <h3 className="font-fraunces text-xl font-bold text-[#3A2C5C] leading-tight mb-3">Custom AI Portfolio</h3>
+                  <button onClick={() => setPage('contact')} className="bg-[#3A2C5C] text-[#F4E9D0] px-4 py-1.5 font-inter text-xs font-semibold flex items-center justify-center gap-1 border-2 border-[#3A2C5C] rounded-full hover:bg-[#F4E9D0] hover:text-[#3A2C5C] transition-colors shadow-[2px_2px_0_#3A2C5C]">
                     Get Started <ChevronRight size={14} />
                   </button>
                 </div>
               </div>
+
             </div>
-          </motion.div>
+          </div>
         </div>
+
       </div>
     </motion.div>
   );
@@ -268,7 +337,7 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
 const ProductsPage = ({ setPage }: { setPage: (p: string) => void }) => {
   return (
     <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      {...pageTransition}
       className="bg-[#0D0D0D] min-h-screen font-inter"
     >
       <Navbar currentPage="products" setPage={setPage} theme="street" />
@@ -409,7 +478,7 @@ const ProductsPage = ({ setPage }: { setPage: (p: string) => void }) => {
 const PortfolioPage = ({ setPage }: { setPage: (p: string) => void }) => {
   return (
     <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      {...pageTransition}
       className="bg-[#0B0B14] min-h-screen text-white font-inter relative overflow-hidden selection:bg-[#C8F51A] selection:text-black"
     >
       {/* Abstract background blobs */}
@@ -525,148 +594,131 @@ const PortfolioPage = ({ setPage }: { setPage: (p: string) => void }) => {
 const ContactPage = ({ setPage }: { setPage: (p: string) => void }) => {
   return (
     <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="bg-[#F5F2FC] min-h-screen p-2 sm:p-4 font-jakarta relative"
+      {...pageTransition}
+      className="bg-[#F4E9D0] min-h-screen font-inter relative pb-20"
+      style={{
+        backgroundImage: 'radial-gradient(#3A2C5C 1px, transparent 1px)',
+        backgroundSize: '24px 24px',
+        backgroundPosition: '0 0, 12px 12px',
+        backgroundColor: '#F4E9D0'
+      }}
     >
-      <div className="max-w-[1400px] mx-auto bg-white rounded-[24px] sm:rounded-[36px] min-h-[95vh] relative overflow-hidden shadow-sm flex flex-col pb-4">
-        <Navbar currentPage="contact" setPage={setPage} theme="lavender" />
+      <Navbar currentPage="contact" setPage={setPage} theme="storybook" />
 
-        {/* Main Hero Area Mirroring Home Page */}
-        <div className="flex-1 flex flex-col mt-16 sm:mt-20 p-4 sm:p-6 lg:p-12">
+      {/* Main Hero Area - Book Spread */}
+      <div className="max-w-[1280px] mx-auto pt-24 sm:pt-32 px-4 sm:px-8">
 
-          <div className="relative flex flex-col md:flex-row justify-between items-center w-full z-10 mb-8 sm:mb-12 lg:mb-16 pt-4 md:pt-0">
-            {/* Mobile Headline Top */}
-            <div className="md:hidden text-center z-20 w-full mb-6">
-              <h1 className="text-[44px] leading-[1.05]">
-                <span className="font-bold italic text-black block">Let's</span>
-                <span className="font-extrabold uppercase text-[#8B6FD6] block tracking-tight">CONNECT</span>
-              </h1>
-            </div>
+        <div className="flex flex-col md:flex-row items-stretch justify-center md:[perspective:1400px]">
+          {/* Left Page (Contact Info) */}
+          <div className="w-full md:w-[48%] bg-[#EFE0BE] border-2 border-[#3A2C5C] p-6 sm:p-12 relative z-10 book-page-left">
 
-            {/* Desktop Headline Left */}
-            <div className="text-left z-20 hidden md:flex flex-col justify-center flex-1 shrink-0">
-              <span className="font-bold italic text-black text-5xl lg:text-6xl xl:text-7xl block mb-2 leading-none">Let's</span>
-              <span className="font-extrabold uppercase text-[#8B6FD6] text-5xl lg:text-6xl xl:text-[84px] block tracking-tighter leading-none">CONNECT</span>
-            </div>
+            {/* Washi tape */}
+            <div className="absolute -top-3 left-16 w-32 h-8 bg-[#A8D6B8]/80 rotate-[-2deg] border-2 border-dashed border-[#3A2C5C]/30 shadow-sm z-20"></div>
 
-            {/* Center Graphic */}
-            <div className="relative w-full md:w-auto flex justify-center my-4 md:my-0 z-10 shrink-0 px-4 lg:px-8">
-              <div className="w-[180px] h-[180px] sm:w-56 sm:h-56 md:w-48 md:h-48 lg:w-60 lg:h-60 xl:w-72 xl:h-72 rounded-full bg-[#E9E2F8] relative flex items-center justify-center border border-gray-100 shadow-inner mx-auto">
-                <div className="absolute w-[125%] h-[125%] rounded-full border border-[#8B6FD6]/15 -z-10" />
-                <div className="bg-[#8B6FD6] text-white w-[55%] h-[55%] sm:w-[60%] sm:h-[60%] rounded-[24px] md:rounded-[28px] lg:rounded-[36px] xl:rounded-[40px] shadow-lg flex items-center justify-center">
-                  <Mail className="w-1/2 h-1/2" strokeWidth={1.5} />
-                </div>
-              </div>
-            </div>
+            <span className="font-inter font-semibold text-[#F4E9D0] uppercase tracking-[0.25em] text-[11px] bg-[#3A2C5C] px-3 py-1 rounded-full mb-6 inline-block border-2 border-[#3A2C5C] shadow-[2px_2px_0_#3A2C5C]">02 • Connect</span>
 
-            {/* Mobile Headline Bottom */}
-            <div className="md:hidden text-center z-20 w-full mt-8 mb-4">
-              <h1 className="text-[44px] leading-[1.05] relative inline-block">
-                <span className="font-bold italic text-black block">Get In</span>
-                <span className="font-extrabold uppercase text-[#8B6FD6] block tracking-tight">TOUCH</span>
-                <Star className="absolute top-1 -right-8 text-[#8B6FD6] fill-[#8B6FD6] w-7 h-7" />
-              </h1>
-            </div>
+            <h1 className="font-fraunces text-5xl sm:text-6xl xl:text-7xl leading-[0.88] text-[#3A2C5C] font-black mt-4 mb-4">
+              Let's <br />
+              <span className="italic font-light text-[#E08244]">CONNECT.</span>
+            </h1>
 
-            {/* Desktop Headline Right */}
-            <div className="text-right z-20 hidden md:flex flex-col justify-center flex-1 shrink-0 items-end">
-              <span className="font-bold italic text-black text-5xl lg:text-6xl xl:text-7xl block mb-2 relative leading-none pr-2">
-                Get In
-                <Star className="absolute -top-4 -right-4 lg:-top-8 lg:-right-8 text-[#8B6FD6] fill-[#8B6FD6]" size={32} />
-              </span>
-              <span className="font-extrabold uppercase text-[#8B6FD6] text-5xl lg:text-6xl xl:text-[84px] block tracking-tighter leading-none">TOUCH</span>
-            </div>
-          </div>
+            <h1 className="font-fraunces text-5xl sm:text-6xl xl:text-7xl leading-[0.88] text-[#3A2C5C] font-black mt-8 mb-12">
+              Get In <br />
+              <span className="italic font-light text-[#C23D3D]">TOUCH.</span>
+            </h1>
 
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="bg-[#8B6FD6] rounded-[32px] p-4 sm:p-8 lg:p-12 text-white flex flex-col lg:flex-row gap-8 lg:gap-12 justify-between relative overflow-hidden mt-2"
-          >
-            <div className="lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-left pt-6 pb-2 px-2">
-              {/* Contact Info Block */}
-              <div className="space-y-4 w-full flex flex-col items-start ml-2 sm:ml-0 mt-4 sm:mt-0">
-                <div className="flex flex-row items-center gap-4 text-white">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center shrink-0">
-                    <Mail size={18} />
+            {/* Speech Bubble */}
+            <div className="bg-[#F4E9D0] border-2 border-[#3A2C5C] p-4 sm:p-6 shadow-[4px_4px_0_#3A2C5C] rotate-[-1deg] relative mb-12 max-w-sm" style={{ borderRadius: '22px 28px 24px 26px' }}>
+              <div className="absolute -bottom-4 left-8 w-6 h-6 bg-[#F4E9D0] border-b-2 border-r-2 border-[#3A2C5C] rotate-45"></div>
+              <div className="space-y-4">
+                <div className="flex flex-row items-center gap-3 sm:gap-4 text-[#3A2C5C] font-fraunces italic text-base sm:text-lg">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#E08244] border-2 border-[#3A2C5C] rounded-full flex items-center justify-center shrink-0 shadow-[2px_2px_0_#3A2C5C]">
+                    <Mail size={16} strokeWidth={2} />
                   </div>
-                  <span className="font-semibold text-[13px] sm:text-lg">dexosa.official@gmail.com</span>
+                  <span className="truncate">dexosa.official@gmail.com</span>
                 </div>
-                <div className="flex flex-row items-center gap-4 text-white">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center shrink-0">
-                    <MapPin size={18} />
+                <div className="flex flex-row items-center gap-3 sm:gap-4 text-[#3A2C5C] font-fraunces italic text-base sm:text-lg">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#A8D6B8] border-2 border-[#3A2C5C] rounded-full flex items-center justify-center shrink-0 shadow-[2px_2px_0_#3A2C5C]">
+                    <MapPin size={16} strokeWidth={2} />
                   </div>
-                  <span className="font-semibold text-[13px] sm:text-lg">Global Digital Agency</span>
+                  <span>Global Digital Agency</span>
                 </div>
-                <a href="https://www.instagram.com/dexo.sa/" target="_blank" rel="noopener noreferrer" className="flex flex-row items-center gap-4 text-white hover:opacity-80 transition-opacity cursor-pointer">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+                <a href="https://www.instagram.com/dexo.sa/" target="_blank" rel="noopener noreferrer" className="flex flex-row items-center gap-3 sm:gap-4 text-[#3A2C5C] font-fraunces italic text-base sm:text-lg hover:text-[#C23D3D] transition-colors">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#C23D3D] text-[#F4E9D0] border-2 border-[#3A2C5C] rounded-full flex items-center justify-center shrink-0 shadow-[2px_2px_0_#3A2C5C]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                   </div>
-                  <span className="font-semibold text-[13px] sm:text-lg">@dexo.sa</span>
+                  <span>@dexo.sa</span>
                 </a>
-                <a href="https://in.pinterest.com/dexosaofficial/" target="_blank" rel="noopener noreferrer" className="flex flex-row items-center gap-4 text-white hover:opacity-80 transition-opacity cursor-pointer">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center shrink-0">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <a href="https://in.pinterest.com/dexosaofficial/" target="_blank" rel="noopener noreferrer" className="flex flex-row items-center gap-3 sm:gap-4 text-[#3A2C5C] font-fraunces italic text-base sm:text-lg hover:text-[#E08244] transition-colors">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#3A2C5C] text-[#F4E9D0] border-2 border-[#3A2C5C] rounded-full flex items-center justify-center shrink-0 shadow-[2px_2px_0_#3A2C5C]">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.168 0 7.41 2.967 7.41 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.624 0 12.017 0z" />
                     </svg>
                   </div>
-                  <span className="font-semibold text-[13px] sm:text-lg">dexosaofficial</span>
+                  <span>dexosaofficial</span>
                 </a>
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end justify-center z-10 mt-8 lg:mt-0">
-              <div className="bg-white rounded-[24px] p-5 sm:p-6 text-black w-full max-w-[340px] sm:max-w-md mx-auto lg:mx-0 shadow-xl">
-                <h3 className="font-bold text-lg sm:text-2xl mb-4 sm:mb-6">Send us a message</h3>
-                <form className="space-y-3 sm:space-y-4 w-full" action="https://formsubmit.co/dexosa.official@gmail.com" method="POST">
-                  {/* Subject line for the email */}
-                  <input type="hidden" name="_subject" value="New Contact Submission from DEXOSA Website!" />
+          </div>
 
-                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                    <div className="col-span-1">
-                      <label className="block text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">Full Name *</label>
-                      <input type="text" name="name" required className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#8B6FD6] bg-white text-[11px] sm:text-sm" placeholder="John Doe" />
-                    </div>
-                    <div className="col-span-1">
-                      <label className="block text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">Email ID *</label>
-                      <input type="email" name="email" required className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#8B6FD6] bg-white text-[11px] sm:text-sm" placeholder="john@example.com" />
-                    </div>
+          {/* Spine center */}
+          <div className="book-spine"></div>
+
+          {/* Right Page (Form) */}
+          <div className="w-full md:w-[48%] bg-[#F4E9D0] border-2 border-[#3A2C5C] p-6 sm:p-12 relative z-10 flex flex-col items-center justify-center book-page-right">
+            <div className="w-full max-w-md bg-[#3A2C5C] border-2 border-[#3A2C5C] p-6 shadow-[6px_6px_0_#C23D3D] rotate-[1deg]" style={{ borderRadius: '24px 36px 26px 32px' }}>
+              <h3 className="font-fraunces text-2xl sm:text-3xl text-[#F4E9D0] mb-6 font-black italic">Send us a message</h3>
+
+              <form className="space-y-4 w-full" action="https://formsubmit.co/dexosa.official@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Contact Submission from DEXOSA Website!" />
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-1">
+                    <label className="block text-xs font-inter font-semibold text-[#A8D6B8] mb-1">Full Name *</label>
+                    <input type="text" name="name" required className="w-full px-4 py-3 border-2 border-[#3A2C5C] focus:outline-none focus:ring-0 bg-[#F4E9D0] text-[#3A2C5C] font-inter text-xs sm:text-sm shadow-[2px_2px_0_#F4E9D0]" placeholder="John Doe" style={{ borderRadius: '9999px' }} />
                   </div>
-
-                  {/* CRITICAL: grid-cols-2 enforced for Location & Phone on mobile */}
-                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                    <div className="col-span-1">
-                      <label className="block text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">Location</label>
-                      <input type="text" name="location" className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#8B6FD6] bg-white text-[11px] sm:text-sm" placeholder="City, Country" />
-                    </div>
-                    <div className="col-span-1">
-                      <label className="block text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">Phone Number</label>
-                      <input type="tel" name="phone" className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#8B6FD6] bg-white text-[11px] sm:text-sm" placeholder="+1234567890" />
-                    </div>
+                  <div className="col-span-1">
+                    <label className="block text-xs font-inter font-semibold text-[#A8D6B8] mb-1">Email ID *</label>
+                    <input type="email" name="email" required className="w-full px-4 py-3 border-2 border-[#3A2C5C] focus:outline-none focus:ring-0 bg-[#F4E9D0] text-[#3A2C5C] font-inter text-xs sm:text-sm shadow-[2px_2px_0_#F4E9D0]" placeholder="john@example.com" style={{ borderRadius: '9999px' }} />
                   </div>
+                </div>
 
-                  <div>
-                    <label className="block text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">Service Interested In</label>
-                    <select name="service" className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#8B6FD6] bg-white appearance-none text-[11px] sm:text-sm">
-                      <option>AI Website Creation</option>
-                      <option>AI Portfolio Creation</option>
-                    </select>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-1">
+                    <label className="block text-xs font-inter font-semibold text-[#A8D6B8] mb-1">Location</label>
+                    <input type="text" name="location" className="w-full px-4 py-3 border-2 border-[#3A2C5C] focus:outline-none focus:ring-0 bg-[#F4E9D0] text-[#3A2C5C] font-inter text-xs sm:text-sm shadow-[2px_2px_0_#F4E9D0]" placeholder="City, Country" style={{ borderRadius: '9999px' }} />
                   </div>
-
-                  <div>
-                    <label className="block text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">How can we help? *</label>
-                    <textarea name="message" required rows={3} className="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#8B6FD6] bg-white resize-none text-[11px] sm:text-sm" placeholder="Tell us about your project..."></textarea>
+                  <div className="col-span-1">
+                    <label className="block text-xs font-inter font-semibold text-[#A8D6B8] mb-1">Phone Number</label>
+                    <input type="tel" name="phone" className="w-full px-4 py-3 border-2 border-[#3A2C5C] focus:outline-none focus:ring-0 bg-[#F4E9D0] text-[#3A2C5C] font-inter text-xs sm:text-sm shadow-[2px_2px_0_#F4E9D0]" placeholder="+1234567890" style={{ borderRadius: '9999px' }} />
                   </div>
+                </div>
 
-                  <button type="submit" className="w-full bg-[#111] text-white font-bold py-3.5 rounded-xl transition-colors text-[13px] sm:text-base mt-2 shadow-md">
-                    Send Message
-                  </button>
-                </form>
-              </div>
+                <div>
+                  <label className="block text-xs font-inter font-semibold text-[#A8D6B8] mb-1">Service Interested In</label>
+                  <select name="service" className="w-full px-4 py-3 border-2 border-[#3A2C5C] focus:outline-none focus:ring-0 bg-[#F4E9D0] text-[#3A2C5C] appearance-none font-inter text-xs sm:text-sm shadow-[2px_2px_0_#F4E9D0]" style={{ borderRadius: '9999px' }}>
+                    <option>AI Website Creation</option>
+                    <option>AI Portfolio Creation</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-inter font-semibold text-[#A8D6B8] mb-1">How can we help? *</label>
+                  <textarea name="message" required rows={3} className="w-full px-4 py-3 border-2 border-[#3A2C5C] focus:outline-none focus:ring-0 bg-[#F4E9D0] text-[#3A2C5C] resize-none font-inter text-xs sm:text-sm shadow-[2px_2px_0_#F4E9D0]" placeholder="Tell us about your project..." style={{ borderRadius: '24px 30px 22px 28px' }}></textarea>
+                </div>
+
+                <button type="submit" className="w-full bg-[#E08244] text-[#3A2C5C] font-inter font-bold text-base py-4 border-2 border-[#3A2C5C] hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[6px_6px_0px_#F4E9D0] shadow-[4px_4px_0_#F4E9D0] transition-all mt-4" style={{ borderRadius: '30px 26px 28px 24px' }}>
+                  Send Message
+                </button>
+              </form>
             </div>
-          </motion.div>
+
+            {/* Floating Decoration */}
+            <Star className="absolute bottom-8 right-8 text-[#C23D3D] fill-[#C23D3D] w-8 h-8 rotate-[-10deg] drop-shadow-[2px_2px_0_#3A2C5C]" strokeWidth={1.5} color="#3A2C5C" />
+          </div>
         </div>
+
       </div>
     </motion.div>
   );
