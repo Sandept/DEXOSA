@@ -74,7 +74,7 @@ const projectsData = [
 
 const Logo = ({ className = "h-8", theme = "dark" }: { className?: string, theme?: string }) => (
   <img
-    src={theme === 'dark' || theme === 'storybook' ? './DEX_Logo.png' : './DS.png'}
+    src={theme === 'dark' || theme === 'storybook' ? './Company/DEX_Logo.png' : './Company/DS.png'}
     alt="DEXOSA Logo"
     className={`h-8 sm:h-10 object-contain ${className}`}
     style={{
@@ -258,14 +258,14 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
                   <div className="relative w-full aspect-square border-2 border-[#3A2C5C] overflow-hidden">
                     {/* Background Image (Adjusted to hide the cut top edge) */}
                     <img
-                      src="./Dha.png"
+                      src="./Company/Dha.png"
                       alt="Background Model"
                       className="absolute inset-0 w-full h-full object-cover z-0 translate-x-[60px] translate-y-[20px] scale-[1.15]"
                     />
 
                     {/* Foreground Transparent Model (Adjusted to hide the cut side edge) */}
                     <img
-                      src="./Spen-Pic.png"
+                      src="./Company/San.png"
                       alt="Model"
                       className="absolute inset-0 w-full h-full object-cover z-10 translate-x-[-50px] translate-y-[20px] scale-[0.85]"
                     />
@@ -276,9 +276,9 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
                 </div>
 
                 {/* Spline Robot (Floating in the gap) */}
-                <div className="absolute top-[-550px] right-[-140px] sm:top-[-100px] sm:right-[450px] w-[270px] h-[258px] sm:w-[320px] sm:h-[350px] z-30 pointer-events-none drop-shadow-2xl">
+                <div className="absolute top-[-540px] right-[-70px] sm:top-[-80px] sm:right-[450px] w-[270px] h-[258px] sm:w-[320px] sm:h-[350px] z-30 pointer-events-none drop-shadow-2xl">
                   {/* Nested wrapper expands the internal canvas to prevent hand clipping and hides watermark */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[110%] overflow-hidden">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[170%] h-[140%] overflow-hidden">
                     <iframe
                       src="https://my.spline.design/genkubgreetingrobot-hxzMy88o7IpYzzco3fPe7tu0/"
                       frameBorder="0"
@@ -410,7 +410,7 @@ const ProductsPage = ({ setPage }: { setPage: (p: string) => void }) => {
                         {/* Front of the card */}
                         <div className="absolute inset-0 w-full h-full bg-[#1c1c1c] [backface-visibility:hidden] flex items-center justify-center rounded-[16px] sm:rounded-2xl overflow-hidden">
                           {!isBlurred && product.name === "SCENE" ? (
-                            <img src="./SCENE.jpeg" alt="SCENE" className="w-full h-full object-cover" />
+                            <img src="./Product/SCENE.jpeg" alt="SCENE" className="w-full h-full object-cover" />
                           ) : (
                             !isBlurred && (
                               <span className="text-white font-medium text-xs sm:text-base drop-shadow-md text-center px-2">
@@ -423,7 +423,7 @@ const ProductsPage = ({ setPage }: { setPage: (p: string) => void }) => {
                         <div className="absolute inset-0 w-full h-full bg-[#111] [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center rounded-[16px] sm:rounded-2xl overflow-hidden">
                           {!isBlurred && product.name === "SCENE" ? (
                             <>
-                              <img src="./SCENE.jpeg" alt="SCENE Flip" className="w-full h-full object-cover opacity-50 scale-110" />
+                              <img src="./Product/SCENE.jpeg" alt="SCENE Flip" className="w-full h-full object-cover opacity-50 scale-110" />
                               <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
                                 <span className="text-white font-oswald text-xl sm:text-2xl tracking-widest font-bold mb-4">SCENE</span>
                                 <button
