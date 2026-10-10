@@ -53,7 +53,7 @@ const FontStyles = () => (
       .book-spine { height: 24px; width: 100%; background: linear-gradient(to bottom, #e5d5b5, #d6c4a0, #e5d5b5); border-left: 2px solid #3A2C5C; border-right: 2px solid #3A2C5C; z-index: 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
     }
 
-    .blob-bg { position: absolute; border-radius: 50%; filter: blur(60px); z-index: 0; opacity: 0.5; }
+    .blob-bg { position: absolute; border-radius: 50%; filter: blur(60px); z-index: 0; opacity: 0.5; transform: translateZ(0); will-change: transform, filter; backface-visibility: hidden; }
     @media (min-width: 768px) { .blob-bg { filter: blur(80px); } }
   `}</style>
 );
@@ -260,6 +260,7 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
                     <img
                       src="./Company/Dha.png"
                       alt="Background Model"
+                      loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover z-0 translate-x-[60px] translate-y-[20px] scale-[1.15]"
                     />
 
@@ -267,6 +268,7 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
                     <img
                       src="./Company/San.png"
                       alt="Model"
+                      loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover z-10 translate-x-[-50px] translate-y-[20px] scale-[0.85]"
                     />
                   </div>
@@ -282,6 +284,7 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
                     <iframe
                       src="https://my.spline.design/genkubgreetingrobot-hxzMy88o7IpYzzco3fPe7tu0/"
                       frameBorder="0"
+                      loading="lazy"
                       className="pointer-events-auto absolute"
                       style={{
                         background: 'transparent',
@@ -315,7 +318,7 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
 
               {/* Featured Card */}
               <div className="bg-[#EFE0BE] border-2 border-[#3A2C5C] p-4 flex items-center gap-4 shadow-[6px_6px_0_#3A2C5C] rotate-[1deg] w-full max-w-[340px]" style={{ borderRadius: '24px 36px 26px 32px' }}>
-                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=200" alt="AI Custom Portfolio" className="w-20 h-24 object-cover border-2 border-[#3A2C5C] rounded-[12px]" />
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=200" alt="AI Custom Portfolio" loading="lazy" className="w-20 h-24 object-cover border-2 border-[#3A2C5C] rounded-[12px]" />
                 <div className="flex-1">
                   <span className="font-inter font-bold text-[#C23D3D] text-[10px] uppercase tracking-widest block mb-1">Featured Service</span>
                   <h3 className="font-fraunces text-xl font-bold text-[#3A2C5C] leading-tight mb-3">Custom AI Portfolio</h3>
@@ -410,7 +413,7 @@ const ProductsPage = ({ setPage }: { setPage: (p: string) => void }) => {
                         {/* Front of the card */}
                         <div className="absolute inset-0 w-full h-full bg-[#1c1c1c] [backface-visibility:hidden] flex items-center justify-center rounded-[16px] sm:rounded-2xl overflow-hidden">
                           {!isBlurred && product.name === "SCENE" ? (
-                            <img src="./Product/SCENE.jpeg" alt="SCENE" className="w-full h-full object-cover" />
+                            <img src="./Product/SCENE.jpeg" alt="SCENE" loading="lazy" className="w-full h-full object-cover" />
                           ) : (
                             !isBlurred && (
                               <span className="text-white font-medium text-xs sm:text-base drop-shadow-md text-center px-2">
@@ -423,7 +426,7 @@ const ProductsPage = ({ setPage }: { setPage: (p: string) => void }) => {
                         <div className="absolute inset-0 w-full h-full bg-[#111] [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center rounded-[16px] sm:rounded-2xl overflow-hidden">
                           {!isBlurred && product.name === "SCENE" ? (
                             <>
-                              <img src="./Product/SCENE.jpeg" alt="SCENE Flip" className="w-full h-full object-cover opacity-50 scale-110" />
+                              <img src="./Product/SCENE.jpeg" alt="SCENE Flip" loading="lazy" className="w-full h-full object-cover opacity-50 scale-110" />
                               <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
                                 <span className="text-white font-oswald text-xl sm:text-2xl tracking-widest font-bold mb-4">SCENE</span>
                                 <button
