@@ -76,7 +76,7 @@ const Logo = ({ className = "h-8", theme = "dark" }: { className?: string, theme
   <img
     src={theme === 'dark' || theme === 'storybook' ? './Company/DEX_Logo.png' : './Company/DS.png'}
     alt="DEXOSA Logo"
-    className={`h-8 sm:h-10 object-contain ${className}`}
+    className={`h-11 sm:h-12 object-contain ${className}`}
     style={{
       mixBlendMode: theme === 'storybook' ? 'multiply' : 'normal',
       filter: theme === 'storybook' ? 'brightness(0) saturate(100%) invert(18%) sepia(26%) saturate(2284%) hue-rotate(223deg) brightness(93%) contrast(92%) drop-shadow(0px 0px 0px #3A2C5C)' : 'none'
@@ -213,7 +213,7 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
 
             <div className="flex flex-col h-full justify-between">
               <div>
-                <span className="font-inter font-semibold text-[#A8D6B8] uppercase tracking-[0.25em] text-[11px] bg-[#3A2C5C] px-3 py-1 rounded-full mb-6 inline-block border-2 border-[#3A2C5C] shadow-[2px_2px_0_#3A2C5C]">01 • Welcome</span>
+                <span className="font-inter font-semibold text-[#A8D6B8] uppercase tracking-[0.25em] text-[11px] bg-[#3A2C5C] px-3 py-1 rounded-full mb-6 inline-block border-2 border-[#3A2C5C] shadow-[2px_2px_0_#3A2C5C]">Welcome</span>
 
                 <h1 className="font-fraunces text-5xl sm:text-7xl xl:text-[92px] leading-[0.88] text-[#3A2C5C] font-black mt-4 mb-4">
                   Build <br />
@@ -269,7 +269,7 @@ const HomePage = ({ setPage }: { setPage: (p: string) => void }) => {
                       src="./Company/San.png"
                       alt="Model"
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover z-10 translate-x-[-50px] translate-y-[20px] scale-[0.85]"
+                      className="absolute inset-0 w-full h-full object-cover z-10 translate-x-[-60px] translate-y-[15px] scale-[0.95]"
                     />
                   </div>
 
@@ -585,7 +585,7 @@ const PortfolioPage = ({ setPage }: { setPage: (p: string) => void }) => {
           <div className="bg-[#14141F] border-2 border-[#C8F51A] px-8 py-6 sm:px-12 sm:py-8 rounded-3xl transform rotate-[-5deg] shadow-2xl flex flex-col items-center">
             <span className="font-marker text-5xl sm:text-7xl text-white uppercase tracking-wider mb-1 sm:mb-2 text-center leading-none">Coming<br />Soon</span>
             <button onClick={() => setPage('home')} className="bg-[#C8F51A] text-black font-bold px-6 py-2.5 rounded-full uppercase tracking-wider text-xs sm:text-sm hover:bg-white transition-colors shadow-lg shadow-[#C8F51A]/20">
-              Go Back Home
+              Back
             </button>
           </div>
         </div>
@@ -618,7 +618,7 @@ const ContactPage = ({ setPage }: { setPage: (p: string) => void }) => {
             {/* Washi tape */}
             <div className="absolute -top-3 left-16 w-32 h-8 bg-[#A8D6B8]/80 rotate-[-2deg] border-2 border-dashed border-[#3A2C5C]/30 shadow-sm z-20"></div>
 
-            <span className="font-inter font-semibold text-[#F4E9D0] uppercase tracking-[0.25em] text-[11px] bg-[#3A2C5C] px-3 py-1 rounded-full mb-6 inline-block border-2 border-[#3A2C5C] shadow-[2px_2px_0_#3A2C5C]">02 • Connect</span>
+            <span className="font-inter font-semibold text-[#F4E9D0] uppercase tracking-[0.25em] text-[11px] bg-[#3A2C5C] px-3 py-1 rounded-full mb-6 inline-block border-2 border-[#3A2C5C] shadow-[2px_2px_0_#3A2C5C]">Connect</span>
 
             <h1 className="font-fraunces text-5xl sm:text-6xl xl:text-7xl leading-[0.88] text-[#3A2C5C] font-black mt-4 mb-4">
               Let's <br />
@@ -646,11 +646,11 @@ const ContactPage = ({ setPage }: { setPage: (p: string) => void }) => {
                   </div>
                   <span>Global Digital Agency</span>
                 </div>
-                <a href="https://www.instagram.com/dexo.sa/" target="_blank" rel="noopener noreferrer" className="flex flex-row items-center gap-3 sm:gap-4 text-[#3A2C5C] font-fraunces italic text-base sm:text-lg hover:text-[#C23D3D] transition-colors">
+                <a href="https://www.instagram.com/dexo.ai/" target="_blank" rel="noopener noreferrer" className="flex flex-row items-center gap-3 sm:gap-4 text-[#3A2C5C] font-fraunces italic text-base sm:text-lg hover:text-[#C23D3D] transition-colors">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#C23D3D] text-[#F4E9D0] border-2 border-[#3A2C5C] rounded-full flex items-center justify-center shrink-0 shadow-[2px_2px_0_#3A2C5C]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                   </div>
-                  <span>@dexo.sa</span>
+                  <span>@dexo.ai</span>
                 </a>
                 <a href="https://in.pinterest.com/dexosaofficial/" target="_blank" rel="noopener noreferrer" className="flex flex-row items-center gap-3 sm:gap-4 text-[#3A2C5C] font-fraunces italic text-base sm:text-lg hover:text-[#E08244] transition-colors">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#3A2C5C] text-[#F4E9D0] border-2 border-[#3A2C5C] rounded-full flex items-center justify-center shrink-0 shadow-[2px_2px_0_#3A2C5C]">
